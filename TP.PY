@@ -1,11 +1,12 @@
-
+import re
 
 def generar_productos(cantidad_productos):
     lista = []
     Talle_valido = False
     Talle_permitidos = ["xs","s","m","l",'xl']
     for i in range(cantidad_productos):
-        id = int(input("Digite el ID del producto: "))
+        id = (input("Digite el ID del producto: "))
+        
         nombre = input("Digite el nombre del producto: ")
         categoria = input("Digite categoria del producto: ").lower()
         precio = int(input("Digite el precio del producto: "))
@@ -23,26 +24,22 @@ def generar_productos(cantidad_productos):
 
     return lista
 
-def generar_proveedor(cantidad_proveedores): #Hace falta esto? 
+def Pedir_Mercaderia(cantidad_proveedores): #Hace falta esto? 
     lista = []
 
     for i in range(cantidad_proveedores):
-        mini_lista = []
         Nombre = input("Digite el nombre del proveedor: ") 
-        Apellido = input("Digite el apellido del proveedor: ") #Pedir nombre y apellido directo
-        Telefono = input("Digite el numero del proveedor: ")
-        Categoria = input("Digite la categoria de productos que comercializa: ")
-        precio = int(input("Digite el precio por unidad: "))
-        stock= int(input("Digite el stock disponible del proveedor: ")) #Que es esto?
+        Id_producto = input("Digite el id del producto: ") #Pedir nombre y apellido directo
+        if re.match(r'^[A-Za-z]{2}[0-9]{3}$', Id_producto) is None:
+            while re.match(r'^[A-Za-z]{2}[0-9]{3}$', Id_producto) is None:
+                Id_producto = input("ID inválido. Debe contener dos letras seguidas de tres números: ")
+            print("ID inválido. Debe contener solo números.")
+        else:
+            print("ID válido.")
+        Cant_prod = int(input("Digite la cantidad de productos: "))
         print()
 
-        mini_lista.append(Nombre)
-        mini_lista.append(Apellido)
-        mini_lista.append(Telefono)
-        mini_lista.append(Categoria)
-        mini_lista.append(precio)
-        mini_lista.append(stock)
-
+        mini_lista = [Nombre,Id_producto,Cant_prod]        
         lista.append(mini_lista)
     return lista
 
@@ -91,15 +88,14 @@ def generar_clientes(lista_productos):
 cantidad_productos = int(input("Digite la cantidad de productos a cargar: "))
 lista_productos = generar_productos(cantidad_productos) #Agregar a las opciones?
 print()
-cantidad_proveedores = int(input("Digite la cantidad de proveedores a cargar: "))
-lista_proveedores = generar_proveedor(cantidad_proveedores) #agregar a las opciones?
+ #agregar a las opciones?
 
 #MENU
 
 elegir_opcion= int(input("""
 1. Cargar Cliente
 2. Ver informacion segun ID de producto
-3.
+3. 
 4.
 5.
 6.
