@@ -1,115 +1,128 @@
 import re
 
-def generar_productos(cantidad_productos):
-    lista = []
-    Talle_valido = False
-    Talle_permitidos = ["xs","s","m","l",'xl']
-    for i in range(cantidad_productos):
-        id = (input("Digite el ID del producto: "))
-        
-        nombre = input("Digite el nombre del producto: ")
-        categoria = input("Digite categoria del producto: ").lower()
-        precio = int(input("Digite el precio del producto: "))
-        stock = int(input("Digite el stock del producto: "))
-        
-        while not Talle_valido: #corregir tema talles, necesito diccionario?
-          talle = input("Digite el talle del producto: ").lower()
-          if talle in Talle_permitidos:
-            Talle_valido = True
-          else:
-           print("Talle inválido. Intente nuevamente") 
+def cargar_productos():
+    lista_PR = []
+    cantidad = int(input("Ingrese la cantidad de productos a cargar: "))
+
+    for _ in range(cantidad):
+        id_producto = input("ID del producto (formato PR001): ")
+        while not re.match(r'^PR[0-9]{3}$', id_producto):
+            id_producto = input("ID inválido. Debe tener el formato PR seguido de tres números (ej: PR001): ")
+
+        nombre = input("Nombre del producto: ")
+        proveedor = input("Proveedor: ")
+        stock = int(input("Stock del producto: "))
+
+        lista_PR.append([id_producto, nombre, proveedor, stock])
+
+    return lista_PR
+
+def cargar_compras():
+    lista_CO = []
+    cantidad = int(input("Ingrese la cantidad de compras a registrar: "))
+
+    for _ in range(cantidad):
+        id_compra = input("ID de la compra (formato CO001): ")
+        while not re.match(r'^CO[0-9]{3}$', id_compra):
+            id_compra = input("ID inválido. Debe tener el formato CO seguido de tres números (ej: CO001): ")
+
+        id_producto = input("ID del producto (formato PR001): ")
+        while not re.match(r'^PR[0-9]{3}$', id_producto):
+            id_producto = input("ID inválido. Debe tener el formato PR seguido de tres números (ej: PR001): ")
+
+        cantidad = int(input("Cantidad de productos: "))
+        proveedor = input("Proveedor: ")
+
+        lista_CO.append([id_compra, id_producto, cantidad, proveedor])
+    return lista_CO
+
+def cargar_ventas():
+    lista_VE = []
+    cantidad = int(input("Ingrese la cantidad de ventas a registrar: "))
+
+    for _ in range(cantidad):
+        id_venta = input("ID de la venta (formato VE001): ")
+        while not re.match(r'^VE[0-9]{3}$', id_venta):
+            id_venta = input("ID inválido. Debe tener el formato VE seguido de tres números (ej: VE001): ")
+
+        id_cliente = input("ID del cliente (formato CL001): ")
+        while not re.match(r'^CL[0-9]{3}$', id_cliente):
+            id_cliente = input("ID inválido. Debe tener el formato CL seguido de tres números (ej: CL001): ")
+
+        id_producto = input("ID del producto (formato PR001): ")
+        while not re.match(r'^PR[0-9]{3}$', id_producto):
+            id_producto = input("ID inválido. Debe tener el formato PR seguido de tres números (ej: PR001): ")
+
+        cantidad = int(input("Cantidad vendida: "))
+
+        lista_VE.append([id_venta, id_cliente, id_producto, cantidad])
+    return lista_VE
+
+def cargar_clientes():
+    lista_CL = []
+    cantidad = int(input("Ingrese la cantidad de clientes a cargar: "))
+
+    for _ in range(cantidad):
+        id_cliente = input("ID del cliente (formato CL001): ")
+        while not re.match(r'^CL[0-9]{3}$', id_cliente):
+            id_cliente = input("ID inválido. Debe tener el formato CL seguido de tres números (ej: CL001): ")
+
+        nombre = input("Nombre del cliente: ")
+        telefono = input("Teléfono: ")
+
+        lista_CL.append([id_cliente, nombre, telefono])
+    return lista_CL
+
+def buscar_producto(lista_productos):
+    id_buscar = input("Ingrese el ID del producto a buscar (formato PR001): ")
+    for prod in lista_productos:
+        if prod[0] == id_buscar:
+            print(f"ID: {prod[0]}, Nombre: {prod[1]}, Proveedor: {prod[2]}, Stock: {prod[3]}")
+            return
+    print("Producto no encontrado.")
+
+def menu():
+    productos = []
+    clientes = []
+    compras = []
+    ventas = []
+
+while True:
+        while True:
+            opciones = 6
+            print()
+            print("---------------------------")
+            print("MENÚ DEL SISTEMA           ")
+            print("---------------------------")
+            print("1. Alta de productos ")
+            print("2. Alta de clientes")
+            print("3. Registro de compras ")
+            print("4. Registro de ventas")
+            print("5. Consulta de producto por ID")
+            print("---------------------------")
+            print("0. Salir del programa")
+            print("---------------------------")
+            print()
             
-        mini_lista = [id, nombre, categoria, precio, stock, talle] #Yo haria la lista asi para ahorrar lineas.
-        lista.append(mini_lista)
-
-    return lista
-
-def Pedir_Mercaderia(cantidad_proveedores): #Hace falta esto? 
-    lista = []
-
-    for i in range(cantidad_proveedores):
-        Nombre = input("Digite el nombre del proveedor: ") 
-        Id_producto = input("Digite el id del producto: ") #Pedir nombre y apellido directo
-        if re.match(r'^[A-Za-z]{2}[0-9]{3}$', Id_producto) is None:
-            while re.match(r'^[A-Za-z]{2}[0-9]{3}$', Id_producto) is None:
-                Id_producto = input("ID inválido. Debe contener dos letras seguidas de tres números: ")
-            print("ID inválido. Debe contener solo números.")
-        else:
-            print("ID válido.")
-        Cant_prod = int(input("Digite la cantidad de productos: "))
+            opcion = input("Seleccione una opción: ")
+            if opcion in [str(i) for i in range(0, opciones + 1)]: # Sólo continua si se elije una opcion de menú válida
+                break
+            else:
+                input("Opción inválida. Presione ENTER para volver a seleccionar.")
         print()
 
-        mini_lista = [Nombre,Id_producto,Cant_prod]        
-        lista.append(mini_lista)
-    return lista
+        if opcion == "0": # Opción salir del programa
+            exit()
 
+        elif opcion == "1":   # Opción 1
+            ...
+        elif opcion == "2":   # Opción 2
+            ...
+        elif opcion == "3":   # Opción 3
+            ...
+        elif opcion == "4":   # Opción 4
+            ...
 
-def verificar_stock_compra(Cant_comprar,categoria,lista): #no entendi funcion
-    booleano = True
-    stock = 0
-    for i in lista:
-        if i[2].lower() == categoria.lower():
-            if i[4] >= Cant_comprar:
-                booleano=True
-            else:
-                booleano=False
-                stock = i[4]
-    return booleano, stock
-
-
-def generar_clientes(lista_productos):
-    lista = []
-
-    mini_lista = []
-    Nombre = input("Digite el nombre del cliente: ")
-    Apellido = input("Digite el apellido del cliente: ") #nombre y apellido directo
-    dni = int(input("Digite el dni del cliente: "))
-    Telefono = int(input("Digite el telefono del cliente:"))
-    categoria = input("Digite la categoria del producto: ") #La categoria no importa, importa el id.
-    cantidad = int(input("Digite la cantidad a comprar: ")) #Es para mayoristas?
-    verificar, stock = verificar_stock_compra(cantidad,categoria,lista_productos) #no entiendo esta parte
-    while verificar==False: #se puede ahorrar este while? y ponerlo en la funcion anterior
-        print(f"Cantidad no disponible, stock actual: {stock}") 
-        cantidad = int(input("Digite la cantidad a comprar: "))
-    print()
-
-    mini_lista.append(Nombre)
-    mini_lista.append(Apellido)
-    mini_lista.append(dni)
-    mini_lista.append(Telefono)
-    mini_lista.append(categoria)
-    mini_lista.append(cantidad)
+        input("\nPresione ENTER para volver al menú.")
+        print("\n\n")
         
-
-    lista.append(mini_lista)
-    return lista
-
-#ACA NO EMPIEZA EL PROGRAMA PRINCIPAL?
-cantidad_productos = int(input("Digite la cantidad de productos a cargar: "))
-lista_productos = generar_productos(cantidad_productos) #Agregar a las opciones?
-print()
- #agregar a las opciones?
-
-#MENU
-
-elegir_opcion= int(input("""
-1. Cargar Cliente
-2. Ver informacion segun ID de producto
-3. 
-4.
-5.
-6.
-7. Salir
-Eliga una opcion: """))
-
-#CARGA DE FUNCION
-while elegir_opcion!=7:
-    if elegir_opcion == 1:
-        clientes = []
-        lista_clientes = generar_clientes(lista_productos)
-        clientes.append(lista_clientes)
-    elif elegir_opcion == 2:
-        id = int(input("Digite el ID del producto: "))
-        for i in lista_productos:
-            if i[0] == id:
-                print(f"id: {i[0]} Categoria:{i[2]} Precio por unidad:{i[3]} Stock:{i[4]}")
