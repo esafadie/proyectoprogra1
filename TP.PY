@@ -17,7 +17,7 @@ def cargar_productos():
 
     return lista_PR
 
-def cargar_compras():
+def Registrar_compras():
     lista_CO = []
     cantidad = int(input("Ingrese la cantidad de compras a registrar: "))
 
@@ -115,14 +115,19 @@ while True:
             exit()
 
         elif opcion == "1":   # Opción 1
-            ...
+            cargar_productos()
+            print("Productos cargados correctamente.")
         elif opcion == "2":   # Opción 2
-            ...
+            cargar_clientes()
+            print("Clientes cargados correctamente.")
         elif opcion == "3":   # Opción 3
-            ...
+            Registrar_compras()
         elif opcion == "4":   # Opción 4
-            ...
+            cargar_ventas()
+            print("Ventas registradas correctamente.")
+        elif opcion == "5":   # Opción 5
+            buscar_producto(cargar_productos())
 
-        input("\nPresione ENTER para volver al menú.")
+            input("\nPresione ENTER para volver al menú.")
         print("\n\n")
         
