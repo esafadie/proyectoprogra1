@@ -88,9 +88,12 @@ def cargar_clientes():
         lista_CL.append([id_cliente, nombre, telefono])
     return lista_CL
 
-def buscar_producto(lista_productos):
+def buscar_producto(productos):
+    if not productos:
+        print("No hay productos cargados.")
+        return
     id_buscar = input("Ingrese el ID del producto a buscar (formato PR001): ")
-    for prod in lista_productos:
+    for prod in productos:
         if prod[0] == id_buscar:
             print(f"ID: {prod[0]}, Nombre: {prod[1]}, Proveedor: {prod[2]}, Stock: {prod[3]}")
             return
@@ -100,10 +103,9 @@ def mostrar_nombres_productos(productos):
     if not productos:
         print("No hay productos cargados.")
         return
-    nombres = [p[1] for p in productos]  # Lista de comprensión
     print("Nombres de productos cargados:")
-    for nombre in nombres:
-        print("-", nombre)
+    for nombre in productos:
+        print(f"ID: {nombre[0]} | Nombre: {nombre[1]} | Proveedor: {nombre[2]} | Stock: {nombre[3]}")
 
 def ordenar_productos_por_stock(productos):
     if not productos:
@@ -114,8 +116,7 @@ def ordenar_productos_por_stock(productos):
     for p in ordenados:
         print(f"ID: {p[0]}, Nombre: {p[1]}, Stock: {p[3]}")
 
-def mostrar_ultimos_productos(sub_opcion,productos,clientes,compras,ventas):
-    if sub_opcion==1:
+def mostrar_ultimos_productos(productos):
         if not productos:
             print("No hay productos cargados.")
             return
@@ -123,50 +124,76 @@ def mostrar_ultimos_productos(sub_opcion,productos,clientes,compras,ventas):
         print("Últimos productos cargados:")
         for p in ultimos:
             print(f"ID: {p[0]}, Nombre: {p[1]}, Stock: {p[3]}")
-    if sub_opcion ==2:
-        if not clientes:
+
+def mostrar_ultimos_clientes(clientes):
+    if not clientes:
             print("No hay clientes cargados")
             return
-        ultimos = clientes[-3:]
-        print("Últimos clientes cargados:")
-        for p in ultimos:
-            print(f"ID: {p[0]}, Nombre: {p[1]}, Telefono: {p[2]}")
-    if sub_opcion ==3:
-        if not compras:
+    ultimos = clientes[-3:]
+    print("Últimos clientes cargados:")
+    for p in ultimos:
+        print(f"ID: {p[0]}, Nombre: {p[1]}, Telefono: {p[2]}")
+
+def mostrar_ultimas_compras(compras):
+    if not compras:
             print("No hay compras cargadas")
             return
-        ultimos = compras[-3:]
-        print("Últimas compras cargadas:")
-        for p in ultimos:
-            print(f"ID Compra: {p[0]}, ID Producto: {p[1]}, Cantidad: {p[2]}, Proveedor: {p[3]}")
-    if sub_opcion ==4:
-        if not ventas:
+    ultimos = compras[-3:]
+    print("Últimas compras cargadas:")
+    for p in ultimos:
+        print(f"ID COMPRA: {p[0]}, ID PRODUCTO: {p[1]}, CANTIDAD: {p[2]}, PROVEEDOR: {p[3]}")
+
+def mostrar_ultimas_ventas(ventas):
+    if not ventas:
             print("No hay ventas cargadas")
             return
-        ultimos = ventas[-3:]
-        print("Últimas ventas cargadas:")
-        for p in ultimos:
-            print(f"ID Venta: {p[0]}, ID Cliente: {p[1]}, ID Producto: {p[2]}, Cantidad: {p[3]}")
+    ultimos = ventas[-3:]
+    print("Últimas ventas cargadas:")
+    for p in ultimos:
+        print(f"ID VENTA: {p[0]}, ID CLIENTE: {p[1]}, ID PRODUCTO: {p[2]}, CANTIDAD: {p[3]}")
 
+def dar_de_baja_clientes(clientes):
+    if not clientes:
+            print("No hay clientes cargados")
+            return
+    if not clientes:
+        print("No hay clientes cargados")
+    id_cliente = input("Digite el ID del cliente. Debe tener el formato CL seguido de tres números (ej: CL001): ")
+    while not re.match(r'^CL[0-9]{3}$', id_cliente):
+        id_cliente = input("ID inválido. Debe tener el formato CL seguido de tres números (ej: CL001): ")
+    for i in clientes:
+        if i[0] == id_cliente:
+            clientes.remove(i)
 
-def dar_de_baja(opcion,clientes,productos):
-
-    if opcion == 1:
-        id_cliente = input("Digite el ID del cliente. Debe tener el formato CL seguido de tres números (ej: CL001): ")
-        while not re.match(r'^CL[0-9]{3}$', id_cliente):
-            id_cliente = input("ID inválido. Debe tener el formato CL seguido de tres números (ej: CL001): ")
-        for i in clientes:
-            if i[0] == id_cliente:
-                clientes.remove(i)
-
-    elif opcion == 2:
-        id_producto = input("Digite el ID del producto. Debe tener el formato CL seguido de tres números (ej: CL001): ")
+def dar_de_baja_productos(productos):
+        if not productos:
+            print("No hay productos cargados")
+            return
+        id_producto = input("Digite el ID del producto. Debe tener el formato PR seguido de tres números (ej: PR001): ")
         while not re.match(r'^PR[0-9]{3}$', id_producto):
-            id_producto = input("ID inválido. Debe tener el formato CL seguido de tres números (ej: CL001): ")
+            id_producto = input("ID inválido. Debe tener el formato PR seguido de tres números (ej: PR001): ")
         for i in productos:
             if i[0] == id_producto:
                 productos.remove(i)
 
+def modificar_producto(productos):
+    if not productos:
+        print("No hay productos cargados.")
+        return
+    id_producto = input("ID del producto a modificar (formato PR001): ")
+    while not re.match(r'^PR[0-9]{3}$', id_producto):
+        id_producto = input("ID inválido o repetido. Ingrese otro (ej: PR001): ")
+    
+    for prod in productos:
+        if prod[0] == id_producto:
+            nombre_nuevo = input("Nuevo nombre del producto: ")
+            proveedor_nuevo = input("Proveedor del producto: ")
+            stock_nuevo = int(input("Stock actual del producto: "))
+
+            prod[1] = nombre_nuevo
+            prod[2] = proveedor_nuevo
+            prod[3] = stock_nuevo
+            print("Producto modificado exitosamente")
 
 def menu():
     productos = []
@@ -176,20 +203,15 @@ def menu():
 
     while True:
         while True:
-            opciones = 9
+            opciones = 4
             print()
             print("---------------------------")
             print("MENÚ DEL SISTEMA           ")
             print("---------------------------")
-            print("1. Alta de productos ")
-            print("2. Alta de clientes")
-            print("3. Registro de compras ")
-            print("4. Registro de ventas")
-            print("5. Consulta de producto por ID")
-            print("6. Mostrar nombres de productos")
-            print("7. Ordenar productos por stock")
-            print("8. Mostrar últimos Cl/Co/V/P")
-            print("9. Dar de baja")
+            print("1. Productos")
+            print("2. Clientes")
+            print("3. Ventas")
+            print("4. Compras")
             print("---------------------------")
             print("0. Salir del programa")
             print("---------------------------")
@@ -206,48 +228,54 @@ def menu():
             exit()
 
         elif opcion == "1":
-            productos = cargar_productos()
-            print("Productos cargados correctamente.")
+            print("1. Cargar producto")
+            print("2. Borrar producto")
+            print("3. Modificar producto") #HACER FUNCION
+            print("4. Mostrar productos") 
+            print("5. Mostrar producto segun ID")
+            sub_opcion = int(input("Digite una opcion: "))
+            if sub_opcion == 1:
+                productos = cargar_productos()
+            elif sub_opcion == 2:
+                dar_de_baja_productos(productos)
+            elif sub_opcion == 3:
+                modificar_producto(productos)
+            elif sub_opcion == 4:
+                mostrar_nombres_productos(productos)
+            elif sub_opcion == 5:
+                buscar_producto(productos)
+
         elif opcion == "2":
-            clientes = cargar_clientes()
-            print("Clientes cargados correctamente.")
+            print("1. Cargar cliente")
+            print("2. Borrar cliente")
+            print("3. Mostrar ultimos clientes")
+            sub_opcion = int(input("Digite una opcion: "))
+            if sub_opcion == 1:
+                clientes = cargar_clientes()
+            elif sub_opcion == 2:
+                dar_de_baja_clientes(clientes)
+            elif sub_opcion == 3:
+                mostrar_ultimos_clientes(clientes)
+
         elif opcion == "3":
-            compras = Registrar_compras(productos)
-            print("Compras registradas correctamente.")
+            print("1. Cargar compra")
+            print("2. Mostrar ultimas compras")
+            sub_opcion = int(input("Digite una opcion: "))
+            if sub_opcion == 1:
+                compras = Registrar_compras()
+                print("Compras registradas correctamente.")
+            elif sub_opcion == 2:
+                mostrar_ultimas_compras(compras)
+
         elif opcion == "4":
-            ventas = cargar_ventas(productos)
-            print("Ventas registradas correctamente.")
-        elif opcion == "5":
-            buscar_producto(productos)
-            input("\nPresione ENTER para volver al menú.")
-        elif opcion == "6":
-            mostrar_nombres_productos(productos)
-            input("\nPresione ENTER para volver al menú.")
-        elif opcion == "7":
-            ordenar_productos_por_stock(productos)
-            input("\nPresione ENTER para volver al menú.")
-        elif opcion == "8":
-            print()
-            print("---------------------------")
-            print("1. Ultimos Productos ")
-            print("2. Ultimos Clientes")
-            print("3. Ultimas Compras")
-            print("4. Ultimas Ventas")
-            print("---------------------------")
-            print()
-            sub_opcion = int(input("Digite la opcion: "))
-            mostrar_ultimos_productos(sub_opcion,productos,clientes,compras,ventas)
-            input("\nPresione ENTER para volver al menú.")
-        elif opcion == "9":
-            print()
-            print("---------------------------")
-            print("1. Dar de baja cliente ")
-            print("2. Dar de baja producto")
-            print("---------------------------")
-            print()
-            sub_opcion = int(input("Digite la opcion: "))
-            dar_de_baja(sub_opcion,clientes,productos)
-            print(productos)
+            print("1. Cargar venta")
+            print("2. Mostrar ultimas ventas")
+            sub_opcion = int(input("Eliga una opcion: "))
+            if sub_opcion == 1:
+                ventas = cargar_ventas(productos)
+                print("Ventas registradas correctamente.")
+            elif sub_opcion == 2:
+                mostrar_ultimas_ventas(ventas)
         print("\n\n")
 
 # Ejecutar el menú
