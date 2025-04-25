@@ -6,14 +6,16 @@ def cargar_productos():
 
     for _ in range(cantidad):
         id_producto = input("ID del producto (formato PR001): ")
-        while not re.match(r'^PR[0-9]{3}$', id_producto) or any(p[0] == id_producto for p in lista_PR):
+        while not re.match(r'^PR[0-9]{3}$', id_producto) or any(p['ID'] == id_producto for p in lista_PR):
             id_producto = input("ID inválido o repetido. Ingrese otro (ej: PR001): ")
 
         nombre = input("Nombre del producto: ")
         proveedor = input("Proveedor: ")
         stock = int(input("Stock del producto: "))
 
-        lista_PR.append([id_producto, nombre, proveedor, stock])
+        encabezados = ['ID','nombre','proveedor','stock']
+        matriz = [(id_producto), nombre, proveedor, stock]
+        lista_PR.append(dict(zip(encabezados,matriz)))
 
     return lista_PR
 
@@ -35,11 +37,11 @@ def Registrar_compras(productos):
 
         # Actualizar stock
         for producto in productos:
-            if producto[0] == id_producto:
-                producto[3] += cantidad_compra
+            if producto['ID'] == id_producto:
+                producto['stock'] += cantidad_compra
                 break
 
-        lista_CO.append([id_compra, id_producto, cantidad_compra, proveedor])
+        lista_CO.append([(id_compra), id_producto, cantidad_compra, proveedor])
     return lista_CO
 
 def cargar_ventas(productos):
@@ -63,14 +65,14 @@ def cargar_ventas(productos):
 
         # Descontar stock
         for producto in productos:
-            if producto[0] == id_producto:
-                if producto[3] >= cantidad_venta:
-                    producto[3] -= cantidad_venta
+            if producto['ID'] == id_producto:
+                if producto['STOCK'] >= cantidad_venta:
+                    producto['STOCK'] -= cantidad_venta
                 else:
                     print(f"Stock insuficiente para el producto {id_producto}. Solo hay {producto[3]} unidades.")
                 break
 
-        lista_VE.append([id_venta, id_cliente, id_producto, cantidad_venta])
+        lista_VE.append([(id_venta), id_cliente, id_producto, cantidad_venta])
     return lista_VE
 
 def cargar_clientes():
@@ -93,11 +95,12 @@ def buscar_producto(productos):
         print("No hay productos cargados.")
         return
     id_buscar = input("Ingrese el ID del producto a buscar (formato PR001): ")
-    for prod in productos:
-        if prod[0] == id_buscar:
-            print(f"ID: {prod[0]}, Nombre: {prod[1]}, Proveedor: {prod[2]}, Stock: {prod[3]}")
-            return
-    print("Producto no encontrado.")
+    filtro = list(filter(lambda prod: prod['ID'] == id_buscar, productos))
+    if not filtro:
+        print("Producto no encontrado")
+    else:
+        print(f"ID: {filtro['ID']}, Nombre: {filtro['nombre']}, Proveedor: {filtro['proveedor']}, Stock: {filtro['stock']}")
+        return
 
 def mostrar_nombres_productos(productos):
     if not productos:
@@ -105,7 +108,7 @@ def mostrar_nombres_productos(productos):
         return
     print("Nombres de productos cargados:")
     for nombre in productos:
-        print(f"ID: {nombre[0]} | Nombre: {nombre[1]} | Proveedor: {nombre[2]} | Stock: {nombre[3]}")
+        print(f"ID: {nombre['ID']} | Nombre: {nombre['nombre']} | Proveedor: {nombre['proveedor']} | Stock: {nombre['stock']}")
 
 def ordenar_productos_por_stock(productos):
     if not productos:
@@ -123,7 +126,7 @@ def mostrar_ultimos_productos(productos):
         ultimos = productos[-3:]  # Slicing para obtener los últimos 3
         print("Últimos productos cargados:")
         for p in ultimos:
-            print(f"ID: {p[0]}, Nombre: {p[1]}, Stock: {p[3]}")
+            print(f"ID: {p['ID']}, Nombre: {p['nombre']}, Stock: {p['stock']}")
 
 def mostrar_ultimos_clientes(clientes):
     if not clientes:
@@ -173,8 +176,9 @@ def dar_de_baja_productos(productos):
         while not re.match(r'^PR[0-9]{3}$', id_producto):
             id_producto = input("ID inválido. Debe tener el formato PR seguido de tres números (ej: PR001): ")
         for i in productos:
-            if i[0] == id_producto:
+            if i['ID'] == id_producto:
                 productos.remove(i)
+                print("Producto eliminado exitosamente")
 
 def modificar_producto(productos):
     if not productos:
@@ -185,15 +189,17 @@ def modificar_producto(productos):
         id_producto = input("ID inválido o repetido. Ingrese otro (ej: PR001): ")
     
     for prod in productos:
-        if prod[0] == id_producto:
+        if prod['ID'] == id_producto:
             nombre_nuevo = input("Nuevo nombre del producto: ")
             proveedor_nuevo = input("Proveedor del producto: ")
             stock_nuevo = int(input("Stock actual del producto: "))
 
-            prod[1] = nombre_nuevo
-            prod[2] = proveedor_nuevo
-            prod[3] = stock_nuevo
+            prod['nombre'] = nombre_nuevo
+            prod['proveedor'] = proveedor_nuevo
+            prod['stock'] = stock_nuevo
             print("Producto modificado exitosamente")
+        else:
+            print("Producto no encontrado")
 
 def menu():
     productos = []
@@ -204,14 +210,13 @@ def menu():
     while True:
         while True:
             opciones = 4
-            print()
             print("---------------------------")
             print("MENÚ DEL SISTEMA           ")
             print("---------------------------")
             print("1. Productos")
             print("2. Clientes")
-            print("3. Ventas")
-            print("4. Compras")
+            print("3. Compras")
+            print("4. Ventas")
             print("---------------------------")
             print("0. Salir del programa")
             print("---------------------------")
@@ -228,11 +233,14 @@ def menu():
             exit()
 
         elif opcion == "1":
+            print("---------------------------")
             print("1. Cargar producto")
             print("2. Borrar producto")
             print("3. Modificar producto") #HACER FUNCION
             print("4. Mostrar productos") 
             print("5. Mostrar producto segun ID")
+            print("---------------------------")
+            print()
             sub_opcion = int(input("Digite una opcion: "))
             if sub_opcion == 1:
                 productos = cargar_productos()
@@ -246,9 +254,12 @@ def menu():
                 buscar_producto(productos)
 
         elif opcion == "2":
+            print("---------------------------")
             print("1. Cargar cliente")
             print("2. Borrar cliente")
             print("3. Mostrar ultimos clientes")
+            print("---------------------------")
+            print()
             sub_opcion = int(input("Digite una opcion: "))
             if sub_opcion == 1:
                 clientes = cargar_clientes()
@@ -258,18 +269,24 @@ def menu():
                 mostrar_ultimos_clientes(clientes)
 
         elif opcion == "3":
+            print("---------------------------")
             print("1. Cargar compra")
             print("2. Mostrar ultimas compras")
+            print("---------------------------")
+            print()
             sub_opcion = int(input("Digite una opcion: "))
             if sub_opcion == 1:
-                compras = Registrar_compras()
+                compras = Registrar_compras(productos)
                 print("Compras registradas correctamente.")
             elif sub_opcion == 2:
                 mostrar_ultimas_compras(compras)
 
         elif opcion == "4":
+            print("---------------------------")
             print("1. Cargar venta")
             print("2. Mostrar ultimas ventas")
+            print("---------------------------")
+            print()
             sub_opcion = int(input("Eliga una opcion: "))
             if sub_opcion == 1:
                 ventas = cargar_ventas(productos)
