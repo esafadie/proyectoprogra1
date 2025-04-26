@@ -101,7 +101,6 @@ def menu():
             sub_opcion = int(input("Eliga una opcion: "))
             if sub_opcion == 1:
                 ventas = cargar_ventas(productos)
-                print("Ventas registradas correctamente.")
             elif sub_opcion == 2:
                 mostrar_ultimas_ventas(ventas)
         print("\n\n")

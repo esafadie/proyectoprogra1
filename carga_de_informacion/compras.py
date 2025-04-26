@@ -20,7 +20,6 @@ def Registrar_compras(productos):
         for producto in productos:
             if producto['ID'] == id_producto:
                 producto['stock'] += cantidad_compra
-                break
 
         lista_CO.append([(id_compra), id_producto, cantidad_compra, proveedor])
     return lista_CO
