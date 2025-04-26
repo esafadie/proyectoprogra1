@@ -7,6 +7,8 @@ from productos import *
 
 from dar_de_baja import *
 
+
+
 def menu():
     productos = []
     clientes = []
@@ -103,6 +105,9 @@ def menu():
             elif sub_opcion == 2:
                 mostrar_ultimas_ventas(ventas)
         print("\n\n")
+
+#Carga usuario
+carga_usuario()
 
 # Ejecutar el menú
 menu()
