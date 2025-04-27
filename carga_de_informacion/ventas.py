@@ -2,11 +2,12 @@ import re
 
 def cargar_ventas(productos):
     lista_VE = []
+    id_cargado = set()
     cantidad = int(input("Ingrese la cantidad de ventas a registrar: "))
 
     for _ in range(cantidad): #Usamos _ ya que el valor de la variable no la usamos
         id_venta = input("ID de la venta (formato VE001): ")
-        while not re.match(r'^VE[0-9]{3}$', id_venta) or any(v[0] == id_venta for v in lista_VE):
+        while not re.match(r'^VE[0-9]{3}$', id_venta) or id_venta in id_cargado:
             id_venta = input("ID inválido o repetido. Ingrese otro (ej: VE001): ")
 
         id_cliente = input("ID del cliente (formato CL001): ")
@@ -26,6 +27,6 @@ def cargar_ventas(productos):
                     producto['stock'] -= cantidad_venta
                 else:
                     print(f"Stock insuficiente para el producto {id_producto}. Solo hay {producto['stock']} unidades.")
-
+        id_cargado.add(id_venta)
         lista_VE.append([(id_venta), id_cliente, id_producto, cantidad_venta])
     return lista_VE
