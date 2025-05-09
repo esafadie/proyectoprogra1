@@ -15,7 +15,7 @@ def cargar_productos():
         stock = int(input("Stock del producto: "))
 
         encabezados = ['ID','nombre','proveedor','stock']
-        matriz = [(id_producto), nombre, proveedor, stock]
+        matriz = [id_producto, nombre, proveedor, stock]
         Id_cargado.add(id_producto)
         lista_PR.append(dict(zip(encabezados,matriz)))
 
