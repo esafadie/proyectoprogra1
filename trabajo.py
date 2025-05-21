@@ -7,13 +7,14 @@ from productos import *
 
 from dar_de_baja import *
 
+from Datos_preexistentes import *
 
 
 def menu():
-    productos = []
-    clientes = []
-    compras = []
-    ventas = []
+    productos = Productos_cargados.copy()  # Copia la lista de productos cargados
+    clientes = Clientes_cargados.copy()  # Copia la lista de clientes cargados
+    compras = Compras_cargadas.copy()  # Copia la lista de compras cargadas
+    ventas = Ventas_cargadas.copy()  # Copia la lista de ventas cargadas
     opciones = 4
     opcion = ""
     while opcion != "0":  # Salir solo si la opción es 0
@@ -43,8 +44,10 @@ def menu():
                 print("4. Mostrar productos") 
                 print("5. Mostrar producto segun ID")
                 print("6. Ordenar segun stock")
+                print("7. Volver al menu principal")
                 print("---------------------------")
                 print()
+                
                 sub_opcion = int(input("Digite una opcion: "))
                 if sub_opcion == 1:
                     productos = cargar_productos()
@@ -58,14 +61,18 @@ def menu():
                     buscar_producto(productos)
                 elif sub_opcion == 6:
                     ordenar_productos_por_stock(productos)
+                elif sub_opcion == 7:
+                    continue
 
             elif opcion == "2": #cliente
                 print("---------------------------")
                 print("1. Cargar cliente")
                 print("2. Borrar cliente")
                 print("3. Mostrar ultimos clientes")
+                print("4. Volver al menu principal")
                 print("---------------------------")
                 print()
+                
                 sub_opcion = int(input("Digite una opcion: "))
                 if sub_opcion == 1:
                     clientes = cargar_clientes()
@@ -73,24 +80,32 @@ def menu():
                     dar_de_baja_clientes(clientes)
                 elif sub_opcion == 3:
                     mostrar_ultimos_clientes(clientes)
+                elif sub_opcion == 4:
+                    continue
+
 
             elif opcion == "3": #compra
                 print("---------------------------")
                 print("1. Cargar compra")
                 print("2. Mostrar ultimas compras")
+                print("3. Volver al menu principal")
                 print("---------------------------")
                 print()
+                
                 sub_opcion = int(input("Digite una opcion: "))
                 if sub_opcion == 1:
                     compras = Registrar_compras(productos)
                     print("Compras registradas correctamente.")
                 elif sub_opcion == 2:
                     mostrar_ultimas_compras(compras)
+                elif sub_opcion == 3:
+                    continue
 
             elif opcion == "4": #venta
                 print("---------------------------")
                 print("1. Cargar venta")
                 print("2. Mostrar ultimas ventas")
+                print("3. Volver al menu principal")
                 print("---------------------------")
                 print()
                 sub_opcion = int(input("Eliga una opcion: "))
@@ -98,6 +113,8 @@ def menu():
                     ventas = cargar_ventas(productos)
                 elif sub_opcion == 2:
                     mostrar_ultimas_ventas(ventas)
+                elif sub_opcion == 3:
+                    continue
                 else:
                     input("Opción inválida.Presione ENTER para volver a seleccionar. ")
             
