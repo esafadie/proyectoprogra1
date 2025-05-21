@@ -1,8 +1,8 @@
-Productos_cargados = [
+productos_cargados = [
     {
-        "Id": "PR001",
-        "'nombre": "Remera",
-        'proveedor': "Miguel munos",
+        "ID": "PR001",
+        "nombre": "Remera",
+        "proveedor": "Miguel Muñoz",
         "stock": 9
     },
     {

@@ -7,14 +7,16 @@ from productos import *
 
 from dar_de_baja import *
 
-from Datos_preexistentes import *
-
+from Datos_preexistentes.Clientes_cargados import clientes_cargados 
+from Datos_preexistentes.Compras_cargadas import compras_cargadas
+from Datos_preexistentes.Productos_cargados import productos_cargados
+from Datos_preexistentes.Ventas_cargadas import ventas_cargadas
 
 def menu():
-    productos = Productos_cargados.copy()  # Copia la lista de productos cargados
-    clientes = Clientes_cargados.copy()  # Copia la lista de clientes cargados
-    compras = Compras_cargadas.copy()  # Copia la lista de compras cargadas
-    ventas = Ventas_cargadas.copy()  # Copia la lista de ventas cargadas
+    productos = productos_cargados.copy()  # Copia la lista de productos cargados
+    clientes = clientes_cargados.copy()  # Copia la lista de clientes cargados
+    compras = compras_cargadas.copy()  # Copia la lista de compras cargadas
+    ventas = ventas_cargadas.copy()  # Copia la lista de ventas cargadas
     opciones = 4
     opcion = ""
     while opcion != "0":  # Salir solo si la opción es 0
