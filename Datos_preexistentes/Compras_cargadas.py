@@ -1,32 +1,7 @@
-compras_cargadas = [
-    {
-        "id_compra": "CO001",
-        "id_producto": "PR001",
-        "cantidad_compra": 10,
-        "proveedor": "Miguel Muñoz"
-    },
-    {
-        "id_compra": "CO002",
-        "id_producto": "PR002",
-        "cantidad_compra": 20,
-        "proveedor": "Textiles del Sur"
-    },
-    {
-        "id_compra": "CO003",
-        "id_producto": "PR003",
-        "cantidad_compra": 15,
-        "proveedor": "Distribuidora Norte"
-    },
-    {
-        "id_compra": "CO004",
-        "id_producto": "PR004",
-        "cantidad_compra": 30,
-        "proveedor": "Matias Tito"
-    },
-    {
-        "id_compra": "CO005",
-        "id_producto": "PR005",
-        "cantidad_compra": 12,
-        "proveedor": "Ropa Urbana SRL"
-    }
+compra_cargada = [
+    ["CO001", "PR001", 10, "Miguel Muñoz"],
+    ["CO002", "PR002", 20, "Textiles del Sur"],
+    ["CO003", "PR003", 15, "Distribuidora Norte"],
+    ["CO004", "PR004", 30, "Matias Tito"],
+    ["CO005", "PR005", 12, "Ropa Urbana SRL"]
 ]

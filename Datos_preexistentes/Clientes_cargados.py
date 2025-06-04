@@ -1,28 +1,7 @@
-
-clientes_cargados = [
-    {
-        "id_cliente": "CL001",
-        "nombre": "Lucía Fernández",
-        "telefono": "1123456789"
-    },
-    {
-        "id_cliente": "CL002",
-        "nombre": "Martín Gómez",
-        "telefono": "1134567890"
-    },
-    {
-        "id_cliente": "CL003",
-        "nombre": "Sofía Martínez",
-        "telefono": "1145678901"
-    },
-    {
-        "id_cliente": "CL004",
-        "nombre": "Diego Rivas",
-        "telefono": "1156789012"
-    },
-    {
-        "id_cliente": "CL005",
-        "nombre": "Valentina López",
-        "telefono": "1167890123"
-    }
+cliente_cargado = [
+    ["CL001", "Lucía Fernández", "1123456789"],
+    ["CL002", "Martín Gómez", "1134567890"],
+    ["CL003", "Sofía Martínez", "1145678901"],
+    ["CL004", "Diego Rivas", "1156789012"],
+    ["CL005", "Valentina López", "1167890123"]
 ]

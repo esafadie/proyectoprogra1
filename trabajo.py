@@ -7,16 +7,23 @@ from productos import *
 
 from dar_de_baja import *
 
-from Datos_preexistentes.Clientes_cargados import clientes_cargados 
-from Datos_preexistentes.Compras_cargadas import compras_cargadas
-from Datos_preexistentes.Productos_cargados import productos_cargados
-from Datos_preexistentes.Ventas_cargadas import ventas_cargadas
+from Datos_preexistentes.Clientes_cargados import *
+from Datos_preexistentes.Compras_cargadas import *
+from Datos_preexistentes.Productos_cargados import *
+from Datos_preexistentes.Ventas_cargadas import *
+
 
 def menu():
-    productos = productos_cargados.copy()  # Copia la lista de productos cargados
-    clientes = clientes_cargados.copy()  # Copia la lista de clientes cargados
-    compras = compras_cargadas.copy()  # Copia la lista de compras cargadas
-    ventas = ventas_cargadas.copy()  # Copia la lista de ventas cargadas
+
+    cliente_preexistente = cliente_cargado.copy()
+    producto_preexistente = producto_cargado.copy()
+    venta_preexistente = venta_cargada.copy()
+    compra_preexistente = compra_cargada.copy()
+
+    productos = []
+    clientes = []
+    compras = []
+    ventas = []
     opciones = 4
     opcion = ""
     while opcion != "0":  # Salir solo si la opción es 0
@@ -39,6 +46,15 @@ def menu():
                 print("Saliendo del programa...")
 
             elif opcion == "1": #producto
+                if not productos:
+                    print("")
+                else:
+                    print("")
+                    print(f"{'ID':<10}{'Nombre':<20}{'Proveedor':<20}{'Stock':<10}")
+                    for p in productos:
+                        print(f"{p['ID']:<10}{p['nombre']:<20}{p['proveedor']:<20}{p['stock']:<10}")
+
+
                 print("---------------------------")
                 print("1. Cargar producto")
                 print("2. Borrar producto")
@@ -52,7 +68,8 @@ def menu():
                 
                 sub_opcion = int(input("Digite una opcion: "))
                 if sub_opcion == 1:
-                    productos = cargar_productos()
+                    producto = cargar_productos()
+                    productos.append(producto)
                 elif sub_opcion == 2:
                     dar_de_baja_productos(productos)
                 elif sub_opcion == 3:
@@ -67,6 +84,13 @@ def menu():
                     continue
 
             elif opcion == "2": #cliente
+                if not clientes:
+                    print("")
+                else:
+                    print("")
+                    print(f"{'ID':<10}{'Nombre':<20}{'Telefono':<20}")
+                    for p in clientes:
+                        print(f"{p[0]:<10}{p[1]:<20}{p[2]:<20}")
                 print("---------------------------")
                 print("1. Cargar cliente")
                 print("2. Borrar cliente")
@@ -77,7 +101,8 @@ def menu():
                 
                 sub_opcion = int(input("Digite una opcion: "))
                 if sub_opcion == 1:
-                    clientes = cargar_clientes()
+                    cliente = cargar_clientes()
+                    clientes.append(cliente)
                 elif sub_opcion == 2:
                     dar_de_baja_clientes(clientes)
                 elif sub_opcion == 3:
@@ -85,8 +110,16 @@ def menu():
                 elif sub_opcion == 4:
                     continue
 
+#    lista_CO.append([(id_compra), id_producto, cantidad_compra, proveedor])
 
             elif opcion == "3": #compra
+                if not compras:
+                    print("")
+                else:
+                    print("")
+                    print(f"{'ID Compra':<10}{'ID Producto':<20}{'Cantidad':<20}{'Proveedor':<20}")
+                    for p in compras:
+                        print(f"{p[0]:<10}{p[1]:<20}{p[2]:<20}{p[3]:<20}")
                 print("---------------------------")
                 print("1. Cargar compra")
                 print("2. Mostrar ultimas compras")
@@ -96,14 +129,21 @@ def menu():
                 
                 sub_opcion = int(input("Digite una opcion: "))
                 if sub_opcion == 1:
-                    compras = Registrar_compras(productos)
-                    print("Compras registradas correctamente.")
+                    compra = Registrar_compras(productos)
+                    compras.append(compra)
                 elif sub_opcion == 2:
                     mostrar_ultimas_compras(compras)
                 elif sub_opcion == 3:
                     continue
 
             elif opcion == "4": #venta
+                if not ventas:
+                    print("")
+                else:
+                    print("")
+                    print(f"{'ID Venta':<10}{'ID Cliente':<20}{'ID Producto':<20}{'Cantidad':<20}")
+                    for p in ventas:
+                        print(f"{p[0]:<10}{p[1]:<20}{p[2]:<20}{p[3]:<20}")
                 print("---------------------------")
                 print("1. Cargar venta")
                 print("2. Mostrar ultimas ventas")
@@ -112,7 +152,8 @@ def menu():
                 print()
                 sub_opcion = int(input("Eliga una opcion: "))
                 if sub_opcion == 1:
-                    ventas = cargar_ventas(productos)
+                    venta = cargar_ventas(productos)
+                    ventas.append(venta)
                 elif sub_opcion == 2:
                     mostrar_ultimas_ventas(ventas)
                 elif sub_opcion == 3:

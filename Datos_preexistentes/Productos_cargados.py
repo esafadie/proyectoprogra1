@@ -1,4 +1,4 @@
-productos_cargados = [
+producto_cargado = [
     {
         "ID": "PR001",
         "nombre": "Remera",
