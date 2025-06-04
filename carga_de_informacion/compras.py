@@ -1,7 +1,7 @@
 import re
+Id_cargado = set()
 
 def Registrar_compras(productos):
-    Id_cargado = set()
 
     id_compra = input("ID de la compra (formato CO001): ")
     while not re.match(r'^CO[0-9]{3}$', id_compra) or id_compra in Id_cargado:

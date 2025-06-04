@@ -1,7 +1,7 @@
 import re 
+id_cargado = set()
 
 def cargar_ventas(productos):
-    id_cargado = set()
 
     id_venta = input("ID de la venta (formato VE001): ")
     while not re.match(r'^VE[0-9]{3}$', id_venta) or id_venta in id_cargado:
