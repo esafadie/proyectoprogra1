@@ -1,4 +1,5 @@
 import re
+import time
 from carga_de_informacion import *
 
 from mostrar_ultimos import *
@@ -15,10 +16,10 @@ from Datos_preexistentes.Ventas_cargadas import *
 
 def menu():
 
-    cliente_preexistente = cliente_cargado.copy()
-    producto_preexistente = producto_cargado.copy()
-    venta_preexistente = venta_cargada.copy()
-    compra_preexistente = compra_cargada.copy()
+    clientes = cliente_cargado.copy()
+    productos = producto_cargado.copy()
+    ventas = venta_cargada.copy()
+    compras = compra_cargada.copy()
 
     productos = []
     clientes = []
@@ -27,6 +28,7 @@ def menu():
     opciones = 4
     opcion = ""
     while opcion != "0":  # Salir solo si la opción es 0
+        time.sleep(2) # Pausa de 2 segundos
         print("---------------------------")
         print("MENÚ DEL SISTEMA           ")
         print("---------------------------")
@@ -66,22 +68,28 @@ def menu():
                 print("---------------------------")
                 print()
                 
-                sub_opcion = int(input("Digite una opcion: "))
-                if sub_opcion == 1:
-                    producto = cargar_productos()
-                    productos.append(producto)
-                elif sub_opcion == 2:
-                    dar_de_baja_productos(productos)
-                elif sub_opcion == 3:
-                    modificar_producto(productos)
-                elif sub_opcion == 4:
-                    mostrar_nombres_productos(productos)
-                elif sub_opcion == 5:
-                    buscar_producto(productos)
-                elif sub_opcion == 6:
-                    ordenar_productos_por_stock(productos)
-                elif sub_opcion == 7:
-                    continue
+               #try except para manejar errores de entrada
+                try:
+                    sub_opcion = int(input("Digite una opcion: "))
+                    if sub_opcion == 1:
+                        producto = cargar_productos()
+                        productos.append(producto)
+                    elif sub_opcion == 2:
+                        dar_de_baja_productos(productos)
+                    elif sub_opcion == 3:
+                        modificar_producto(productos)
+                    elif sub_opcion == 4:
+                        mostrar_nombres_productos(productos)
+                    elif sub_opcion == 5:
+                        buscar_producto(productos)
+                    elif sub_opcion == 6:
+                        ordenar_productos_por_stock(productos)
+                    elif sub_opcion == 7:
+                        continue
+                    else:
+                        print("Opción inválida. Intente nuevamente.")
+                except ValueError:
+                    print("Debe ingresar un número entre el 1 y 7. ")
 
             elif opcion == "2": #cliente
                 if not clientes:
@@ -99,16 +107,21 @@ def menu():
                 print("---------------------------")
                 print()
                 
-                sub_opcion = int(input("Digite una opcion: "))
-                if sub_opcion == 1:
-                    cliente = cargar_clientes()
-                    clientes.append(cliente)
-                elif sub_opcion == 2:
-                    dar_de_baja_clientes(clientes)
-                elif sub_opcion == 3:
-                    mostrar_ultimos_clientes(clientes)
-                elif sub_opcion == 4:
-                    continue
+                try:
+                    sub_opcion = int(input("Digite una opcion: "))
+                    if sub_opcion == 1:
+                        cliente = cargar_clientes()
+                        clientes.append(cliente)
+                    elif sub_opcion == 2:
+                        dar_de_baja_clientes(clientes)
+                    elif sub_opcion == 3:
+                        mostrar_ultimos_clientes(clientes)
+                    elif sub_opcion == 4:
+                        continue
+                    else:
+                        print("Opción inválida. Intente nuevamente.")
+                except ValueError:
+                    print("Debe ingresar un número entre el 1 y el 4.")
 
 #    lista_CO.append([(id_compra), id_producto, cantidad_compra, proveedor])
 
@@ -127,14 +140,20 @@ def menu():
                 print("---------------------------")
                 print()
                 
-                sub_opcion = int(input("Digite una opcion: "))
-                if sub_opcion == 1:
-                    compra = Registrar_compras(productos)
-                    compras.append(compra)
-                elif sub_opcion == 2:
-                    mostrar_ultimas_compras(compras)
-                elif sub_opcion == 3:
-                    continue
+                try:
+                    sub_opcion = int(input("Digite una opcion: "))
+                    if sub_opcion == 1:
+                        compra = Registrar_compras(productos)
+                        compras.append(compra)
+                    elif sub_opcion == 2:
+                        mostrar_ultimas_compras(compras)
+                    elif sub_opcion == 3:
+                        continue
+                    else:
+                        print("Opción inválida. Intente nuevamente.")
+                except ValueError:
+                    print("Debe ingresar un número entre el 1 y 3.")
+
 
             elif opcion == "4": #venta
                 if not ventas:
@@ -150,16 +169,20 @@ def menu():
                 print("3. Volver al menu principal")
                 print("---------------------------")
                 print()
-                sub_opcion = int(input("Eliga una opcion: "))
-                if sub_opcion == 1:
-                    venta = cargar_ventas(productos)
-                    ventas.append(venta)
-                elif sub_opcion == 2:
-                    mostrar_ultimas_ventas(ventas)
-                elif sub_opcion == 3:
-                    continue
-                else:
-                    input("Opción inválida.Presione ENTER para volver a seleccionar. ")
+                
+                try:
+                    sub_opcion = int(input("Eliga una opcion: "))
+                    if sub_opcion == 1:
+                        venta = cargar_ventas(productos)
+                        ventas.append(venta)
+                    elif sub_opcion == 2:
+                        mostrar_ultimas_ventas(ventas)
+                    elif sub_opcion == 3:
+                        continue
+                    else:
+                        print("Opción inválida. Intente nuevamente.\n")
+                except ValueError:
+                    print("Debe ingresar un número entre el 1 y 3.")
             
             print("\n\n")
 
