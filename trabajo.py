@@ -54,7 +54,7 @@ def menu():
                     for p in productos:
                         print(f"{p['ID']:<10}{p['nombre']:<20}{p['proveedor']:<20}{p['stock']:<10}")
                 except:
-                    print("No se pudo encontrar el archivo")
+                    print("No hay productos cargados")
 
 
                 print("---------------------------")
