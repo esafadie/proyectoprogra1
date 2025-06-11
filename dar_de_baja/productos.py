@@ -5,7 +5,7 @@ def eliminar_por_id(lista, id_buscado, i=0):
         return lista
     if lista[i]['ID'] == id_buscado:
         lista.pop(i)
-        return eliminar_por_id(lista, id_buscado, i)
+        return lista
     return eliminar_por_id(lista, id_buscado, i + 1)
 
 def dar_de_baja_productos(archivo):
