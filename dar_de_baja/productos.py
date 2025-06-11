@@ -1,5 +1,12 @@
 import re
-def dar_de_baja_productos(productos):
+import json
+def dar_de_baja_productos(archivo):
+    try:
+        arch = open(archivo,"r")
+        productos = json.load(arch)
+        if not productos:
+            print("No hay productos cargados")
+            return
         if not productos:
             print("No hay productos cargados")
             return
@@ -10,3 +17,13 @@ def dar_de_baja_productos(productos):
             if i['ID'] == id_producto:
                 productos.remove(i)
                 print("Producto eliminado exitosamente")
+                with open(archivo, "w", encoding="utf-8") as modificar:
+                    json.dump(productos, modificar)
+    except:
+        print("No se puede abrir el archivo")
+    finally:
+        try:
+            arch.close()
+        except Exception as e:
+            print(f"No se puede abrie el archivo correctamente: {e}")
+    

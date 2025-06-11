@@ -73,15 +73,15 @@ def menu():
                     producto = cargar_productos()
                     productos.append(producto)
                 elif sub_opcion == 2:
-                    dar_de_baja_productos(productos)
+                    dar_de_baja_productos("carga_de_informacion/productos.json")
                 elif sub_opcion == 3:
-                    modificar_producto(productos)
+                    modificar_producto("carga_de_informacion/productos.json")
                 elif sub_opcion == 4:
-                    mostrar_nombres_productos(productos)
+                    mostrar_nombres_productos("carga_de_informacion/productos.json")
                 elif sub_opcion == 5:
                     buscar_producto("carga_de_informacion/productos.json")
                 elif sub_opcion == 6:
-                    ordenar_productos_por_stock(productos)
+                    ordenar_productos_por_stock("carga_de_informacion/productos.json")
                 elif sub_opcion == 7:
                     continue
 
@@ -139,7 +139,7 @@ def menu():
                 if sub_opcion == 1:
                     compra = registrar_compra("carga_de_informacion/compras.txt",productos)
                 elif sub_opcion == 2:
-                    mostrar_ultimas_compras(compras)
+                    mostrar_ultimas_compras("carga_de_informacion/compras.txt")
                 elif sub_opcion == 3:
                     continue
 
@@ -162,9 +162,9 @@ def menu():
                 print()
                 sub_opcion = int(input("Eliga una opcion: "))
                 if sub_opcion == 1:
-                    venta = cargar_ventas("carga_de_informacion/ventas.txt",productos)
+                    venta = cargar_ventas("carga_de_informacion/ventas.txt","carga_de_informacion/productos.json")
                 elif sub_opcion == 2:
-                    mostrar_ultimas_ventas(ventas)
+                    mostrar_ultimas_ventas("carga_de_informacion/ventas.txt")
                 elif sub_opcion == 3:
                     continue
                 else:
