@@ -1,4 +1,5 @@
 import re
+import json
 
 Id_cargado = set()
 def cargar_productos():
@@ -15,4 +16,12 @@ def cargar_productos():
     Id_cargado.add(id_producto)
     diccionario = (dict(zip(encabezados,matriz)))
 
-    return diccionario
+    try:
+        with open('carga_de_informacion/productos.json','r') as f:
+            lista = json.load(f)
+    except FileNotFoundError:
+        lista = []
+    lista.append(diccionario)
+   
+    with open("carga_de_informacion/productos.json","w") as f:
+        json.dump(lista,f)

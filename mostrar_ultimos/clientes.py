@@ -1,8 +1,7 @@
-def mostrar_ultimos_clientes(clientes):
-    if not clientes:
-            print("No hay clientes cargados")
-            return
-    ultimos = clientes[-3:]
-    print("Últimos clientes cargados:")
-    for p in ultimos:
-        print(f"ID: {p[0]}, Nombre: {p[1]}, Telefono: {p[2]}")
+def mostrar_ultimos_clientes(archivo):
+    with open(archivo, "r", encoding="UTF-8") as archivo:
+        lineas = archivo.readlines()
+    ultimos = lineas[-3:]
+    for linea in ultimos:
+        id, nombre, telefono = linea.strip().split(";")
+        print(f"ID: {id} Nombre: {nombre} Telefono: {telefono}")
