@@ -1,7 +1,7 @@
 import re
 import json
 from carga_de_informacion import *
-
+import time
 from mostrar_ultimos import *
 
 from productos import *
@@ -41,7 +41,11 @@ def menu():
         print()
 
         opcion = input("Seleccione una opción: ")
-        
+        if not opcion in [str(i) for i in range(0, opciones + 1)]:
+            print("Opción inválida. Por favor, seleccione una opción del menú.")
+            time.sleep(1)
+            continue
+
         if opcion in [str(i) for i in range(0, opciones + 1)]:
             if opcion == "0":
                 print("Saliendo del programa...")
@@ -51,9 +55,13 @@ def menu():
                     archivo = open("carga_de_informacion/productos.json","r")
                     productos = json.load(archivo)
                     print(f"{'ID':<10}{'Nombre':<20}{'Proveedor':<20}{'Stock':<10}")
-                    for p in productos:
-                        print(f"{p['ID']:<10}{p['nombre']:<20}{p['proveedor']:<20}{p['stock']:<10}")
-                except:
+                    def mostrar_productos(productos, indice=0): #recursividad
+                        if indice >= len(productos):
+                            return #caso base: Cuando el índice alcanza el largo de la lista, se detiene la recursión
+                        p = productos[indice]
+                        print(f"{p['ID']:<10}{p['Nombre']:<20}{p['Proveedor']:<20}{p['Stock']:<10}")
+                        mostrar_productos(productos, indice + 1) #Caso recursivo: La función se llama a sí misma avanzando al siguiente índice.
+                except FileNotFoundError:
                     print("No hay productos cargados")
 
 
@@ -68,7 +76,17 @@ def menu():
                 print("---------------------------")
                 print()
                 
-                sub_opcion = int(input("Digite una opcion: "))
+                try:
+                    sub_opcion = int(input("Digite una opcion: "))
+                    if not 1 <= sub_opcion <= 7:
+                        print("Opción fuera de rango. Se volverá al menú principal.")
+                        time.sleep(1)
+                        continue
+                except ValueError:
+                    print("Debe ingresar un número válido. Se volverá al menú principal.")
+                    time.sleep(1)
+                    continue
+
                 if sub_opcion == 1:
                     producto = cargar_productos()
                     productos.append(producto)
@@ -104,7 +122,17 @@ def menu():
                 print("---------------------------")
                 print()
                 
-                sub_opcion = int(input("Digite una opcion: "))
+                try:
+                    sub_opcion = int(input("Digite una opcion: "))
+                    if not 1 <= sub_opcion <= 4:
+                        print("Opción fuera de rango. Se volverá al menú principal.")
+                        time.sleep(1)
+                        continue
+                except ValueError:
+                    print("Debe ingresar un número válido. Se volverá al menú principal.")
+                    time.sleep(1)
+                    continue
+                
                 if sub_opcion == 1:
                     cliente = cargar_clientes("carga_de_informacion/clientes.txt")
                     clientes.append(cliente)
@@ -135,9 +163,19 @@ def menu():
                 print("---------------------------")
                 print()
                 
-                sub_opcion = int(input("Digite una opcion: "))
+                try:
+                    sub_opcion = int(input("Digite una opcion: "))
+                    if not 1 <= sub_opcion <= 3:
+                        print("Opción fuera de rango. Se volverá al menú principal.")
+                        time.sleep(1)
+                        continue
+                except ValueError:
+                    print("Debe ingresar un número válido. Se volverá al menú principal.")
+                    time.sleep(1)
+                    continue
+                
                 if sub_opcion == 1:
-                    compra = registrar_compra("carga_de_informacion/compras.txt",productos)
+                    compras = registrar_compra("carga_de_informacion/compras.txt",productos)
                 elif sub_opcion == 2:
                     mostrar_ultimas_compras("carga_de_informacion/compras.txt")
                 elif sub_opcion == 3:
@@ -160,9 +198,20 @@ def menu():
                 print("3. Volver al menu principal")
                 print("---------------------------")
                 print()
-                sub_opcion = int(input("Eliga una opcion: "))
+                
+                try:
+                    sub_opcion = int(input("Digite una opcion: "))
+                    if not 1 <= sub_opcion <= 3:
+                        print("Opción fuera de rango. Se volverá al menú principal.")
+                        time.sleep(1)
+                        continue
+                except ValueError:
+                    print("Debe ingresar un número válido. Se volverá al menú principal.")
+                    time.sleep(1)
+                    continue
+                
                 if sub_opcion == 1:
-                    venta = cargar_ventas("carga_de_informacion/ventas.txt","carga_de_informacion/productos.json")
+                    ventas = cargar_ventas("carga_de_informacion/ventas.txt","carga_de_informacion/productos.json")
                 elif sub_opcion == 2:
                     mostrar_ultimas_ventas("carga_de_informacion/ventas.txt")
                 elif sub_opcion == 3:
