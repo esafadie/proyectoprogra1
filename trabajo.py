@@ -40,7 +40,10 @@ def menu():
                 try:
                     archivo = open("carga_de_informacion/productos.json","r")
                     productos = json.load(archivo)
-                    print(f"{'ID':<10}{'Nombre':<20}{'Proveedor':<20}{'Stock':<10}")
+                    if productos == []:
+                        print("")
+                    else:
+                        print(f"{'ID':<10}{'Nombre':<20}{'Proveedor':<20}{'Stock':<10}")
                     def mostrar_productos(productos, indice=0): #recursividad
                         if indice >= len(productos):
                             return #caso base: Cuando el índice alcanza el largo de la lista, se detiene la recursión
