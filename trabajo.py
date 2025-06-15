@@ -218,7 +218,7 @@ def menu():
             print("\n\n")
 
 #Carga usuario
-#carga_usuarios()
+carga_usuarios()
 
 # Ejecutar el menú
 menu()
