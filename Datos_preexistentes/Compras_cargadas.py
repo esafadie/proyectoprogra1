@@ -1,7 +1,0 @@
-compra_cargada = [
-    ["CO001", "PR001", 10, "Miguel Muñoz"],
-    ["CO002", "PR002", 20, "Textiles del Sur"],
-    ["CO003", "PR003", 15, "Distribuidora Norte"],
-    ["CO004", "PR004", 30, "Matias Tito"],
-    ["CO005", "PR005", 12, "Ropa Urbana SRL"]
-]

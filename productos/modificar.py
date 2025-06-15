@@ -12,6 +12,8 @@ def modificar_producto(archivo):
         while not re.match(r'^PR[0-9]{3}$', id_producto):
             id_producto = input("ID inválido o repetido. Ingrese otro (ej: PR001): ")
 
+        producto_encontrado = False
+
         for prod in productos:
             if prod['ID'] == id_producto:
                 nombre_nuevo = input("Nuevo nombre del producto: ")
@@ -21,7 +23,13 @@ def modificar_producto(archivo):
                 prod['nombre'] = nombre_nuevo
                 prod['proveedor'] = proveedor_nuevo
                 prod['stock'] = stock_nuevo
-                print("Producto modificado exitosamente")
+                producto_encontrado = True
+        if producto_encontrado == True:
+            print("Producto modificado exitosamente")
+        else:
+            print("No se pudo encontrar el producto deseado")
+
+        
         with open(archivo, "w", encoding="utf-8") as modificar:
             json.dump(productos, modificar)
     except:

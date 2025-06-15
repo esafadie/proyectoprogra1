@@ -12,7 +12,9 @@ def buscar_producto(archivo):
             print("Producto no encontrado")
         else:
             prod = filtro[0]
-            print(f"ID: {prod['ID']}, Nombre: {prod['nombre']}, Proveedor: {prod['proveedor']}, Stock: {prod['stock']}")
+            print()
+            print(f"{'ID':<10}{'Nombre':<20}{'Proveedor':<20}{'Stock':<10}")
+            print(f"{prod['ID']:<10}{prod['nombre']:<20}{prod['proveedor']:<20}{prod['stock']:<10}")
             return
     except:
         print("No se puede abrir el archivo")

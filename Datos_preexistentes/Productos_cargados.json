@@ -1,0 +1,38 @@
+[
+  {
+    "ID": "PR001",
+    "nombre": "Remera",
+    "proveedor": "Diego Ramirez",
+    "stock": 439
+  },
+  {
+    "ID": "PR002",
+    "nombre": "Pantalones",
+    "proveedor": "Natalia Ramirez",
+    "stock": 40
+  },
+  {
+    "ID": "PR003",
+    "nombre": "Gorros",
+    "proveedor": "Joaquin Gimenez",
+    "stock": 10
+  },
+  {
+    "ID": "PR004",
+    "nombre": "Guantes",
+    "proveedor": "Natalia",
+    "stock": 23
+  },
+  {
+    "ID": "PR005",
+    "nombre": "Zapatillas",
+    "proveedor": "Ramiro Alvarez",
+    "stock": 4
+  },
+  {
+    "ID": "PR006",
+    "nombre": "Medias",
+    "proveedor": "Santiago Frias",
+    "stock": 300
+  }
+]

@@ -17,8 +17,8 @@ def cargar_ventas(archivo_ventas,archivo_productos):
         cantidad_venta = int(input("Cantidad vendida: "))
 
         #abrir archivo productos
-        arch = open(archivo_productos,"r")
-        productos = json.load(arch)
+        with open(archivo_productos, "r", encoding="utf-8") as info_productos:
+            productos = json.load(info_productos)
         if not productos:
             print("No hay productos cargados.")
             return
@@ -34,7 +34,7 @@ def cargar_ventas(archivo_ventas,archivo_productos):
                     print(f"Stock insuficiente para el producto {id_producto}. Solo hay {producto['stock']} unidades.")
                 
     except OSError as mensaje:
-        print("No se puede grabar el archivo:",mensaje)
+        print("")
     finally:
         try:
             arch.close()
