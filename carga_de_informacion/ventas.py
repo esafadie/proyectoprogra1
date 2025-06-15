@@ -23,15 +23,22 @@ def cargar_ventas(archivo_ventas,archivo_productos):
             print("No hay productos cargados.")
             return
         # Descontar stock
+        producto_encontrado = False
         for producto in productos:
             if producto['ID'] == id_producto:
                 if producto['stock'] >= cantidad_venta:
                     producto['stock'] -= cantidad_venta
-                    with open(archivo_productos, "w", encoding="utf-8") as modificar:
-                        json.dump(productos, modificar)
-                    arch.write(id_venta + ";" + id_cliente + ";" + id_producto + ";" + str(cantidad_venta) + "\n")
+                    producto_encontrado = True
                 else:
                     print(f"Stock insuficiente para el producto {id_producto}. Solo hay {producto['stock']} unidades.")
+        
+        if producto_encontrado == False:
+            print("Producto no encontrado")
+        else:
+            with open(archivo_productos, "w", encoding="utf-8") as modificar:
+                json.dump(productos, modificar)
+            arch.write(id_venta + ";" + id_cliente + ";" + id_producto + ";" + str(cantidad_venta) + "\n")
+                
                 
     except OSError as mensaje:
         print("")

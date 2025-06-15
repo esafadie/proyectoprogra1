@@ -25,3 +25,4 @@ def cargar_productos():
    
     with open("carga_de_informacion/productos.json","w") as f:
         json.dump(lista,f)
+    Id_cargado.add(id_producto)

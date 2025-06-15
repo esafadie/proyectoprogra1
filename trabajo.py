@@ -132,8 +132,6 @@ def menu():
                 elif sub_opcion == 4:
                     continue
 
-#    lista_CO.append([(id_compra), id_producto, cantidad_compra, proveedor])
-
             elif opcion == "3": #compra
                 try:
                     with open("carga_de_informacion/compras.txt","r",encoding="UTF-8") as file:
@@ -180,7 +178,7 @@ def menu():
                         if linea == "":
                             print("")
                         else:
-                            print(f"{'ID Compra':<20}{'ID Producto':<20}{'Cantidad':<20}{'Proveedor':<20}")
+                            print(f"{'ID Venta':<20}{'ID Cliente':<20}{'ID Producto':<20}{'Cantidad':<20}")
                         while linea:
                             idventa,idcliente,idproducto,cantidad = linea.strip().split(";")
                             print(f"{idventa:20}{idcliente:20}{idproducto:20}{cantidad:20}")
