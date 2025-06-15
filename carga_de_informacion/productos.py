@@ -4,6 +4,12 @@ import json
 Id_cargado = set()
 def cargar_productos():
 
+    with open("carga_de_informacion/productos.json", "r", encoding="utf-8") as f:
+        productos = json.load(f)
+    for producto in productos:
+        Id_cargado.add(producto["ID"])
+
+
     id_producto = input("ID del producto (formato PR001): ")
     while not re.match(r'^PR[0-9]{3}$', id_producto) or id_producto in Id_cargado: 
         id_producto = input("ID inválido o repetido. Ingrese otro (ej: PR001): ")

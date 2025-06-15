@@ -3,6 +3,13 @@ import json
 id_cargado = set()
 
 def cargar_ventas(archivo_ventas,archivo_productos):
+    
+    with open(archivo_ventas, "r", encoding="utf-8") as f:
+            for linea in f:
+                partes = linea.strip().split(";")
+                if partes:
+                    id_cargado.add(partes[0])
+
     try:
         arch = open(archivo_ventas,"a",encoding="UTF-8")
         id_venta = input("ID de la venta (formato VE001): ")

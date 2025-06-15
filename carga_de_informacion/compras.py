@@ -5,6 +5,11 @@ Id_cargado = set()
 
 
 def registrar_compra(arch_compras,arch_productos):
+    with open(arch_compras, "r", encoding="utf-8") as f:
+            for linea in f:
+                partes = linea.strip().split(";")
+                if partes:
+                    Id_cargado.add(partes[0])
     try:
         arch = open(arch_compras,"a",encoding="UTF-8")
         id_compra = input("ID de la compra (formato CO001): ")
