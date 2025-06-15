@@ -61,7 +61,8 @@ def menu():
                 print("3. Modificar producto") 
                 print("4. Mostrar producto segun ID")
                 print("5. Ordenar segun stock")
-                print("6. Volver al menu principal")
+                print("6. Ordenar segun ID")
+                print("7. Volver al menu principal")
                 print("---------------------------")
                 print()
                 
@@ -88,6 +89,8 @@ def menu():
                 elif sub_opcion == 5:
                     ordenar_productos_por_stock("carga_de_informacion/productos.json")
                 elif sub_opcion == 6:
+                    ordenar_productos_por_id("carga_de_informacion/productos.json")
+                elif sub_opcion == 7:
                     continue
 
             elif opcion == "2": #cliente
@@ -215,7 +218,7 @@ def menu():
             print("\n\n")
 
 #Carga usuario
-carga_usuarios()
+#carga_usuarios()
 
 # Ejecutar el menú
 menu()

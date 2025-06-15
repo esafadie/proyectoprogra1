@@ -18,7 +18,15 @@ def registrar_compra(arch_compras,arch_productos):
         id_producto = input("ID del producto (formato PR001): ")
         while not re.match(r'^PR[0-9]{3}$', id_producto):
             id_producto = input("ID inválido. Debe tener el formato PR seguido de tres números (ej: PR001): ")
-        cantidad_compra = int(input("Cantidad de productos: "))
+        while True:
+            try:
+                cantidad_compra = int(input("Cantidad de productos: "))
+                if cantidad_compra > 0:
+                    break
+                else:
+                    print("La cantidad debe ser un número entero positivo.")
+            except ValueError:
+                print("Entrada inválida. Por favor, ingrese un número entero positivo.")
         proveedor = input("Proveedor: ")
 
         info_productos = open(arch_productos,"r")
