@@ -16,7 +16,16 @@ def cargar_productos():
 
     nombre = input("Nombre del producto: ")
     proveedor = input("Proveedor: ")
-    stock = int(input("Stock del producto: "))
+    while True:
+        try:
+            stock = int(input("Stock del producto: "))
+            if stock >= 0:
+                break
+            else:
+                print("El stock debe ser un número entero no negativo.")
+        except ValueError:
+            print("Entrada inválida. Por favor, ingrese un número entero no negativo.")
+            
     encabezados = ['ID','nombre','proveedor','stock']
     matriz = [id_producto, nombre, proveedor, stock]
     Id_cargado.add(id_producto)

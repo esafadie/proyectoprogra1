@@ -1,1 +1,50 @@
-[{"ID": "PR008", "nombre": "OIERF", "proveedor": "FRIOE", "stock": 943}, {"ID": "PR007", "nombre": "foire", "proveedor": "noirfe", "stock": 483}, {"ID": "PR001", "nombre": "Remera", "proveedor": "Diego Ramirez", "stock": 439}, {"ID": "PR006", "nombre": "Medias", "proveedor": "Santiago Frias", "stock": 300}, {"ID": "PR002", "nombre": "Pantalones", "proveedor": "Natalia Ramirez", "stock": 40}, {"ID": "PR004", "nombre": "Guantes", "proveedor": "Natalia", "stock": 23}, {"ID": "PR003", "nombre": "Gorros", "proveedor": "Joaquin Gimenez", "stock": 10}, {"ID": "PR005", "nombre": "Zapatillas", "proveedor": "Ramiro Alvarez", "stock": 4}]
+[
+    {
+        "ID": "PR001",
+        "nombre": "Remera",
+        "proveedor": "Diego Ramirez",
+        "stock": 439
+    },
+    {
+        "ID": "PR002",
+        "nombre": "Pantalones",
+        "proveedor": "Natalia Ramirez",
+        "stock": 61
+    },
+    {
+        "ID": "PR003",
+        "nombre": "Gorros",
+        "proveedor": "Joaquin Gimenez",
+        "stock": 10
+    },
+    {
+        "ID": "PR004",
+        "nombre": "Guantes",
+        "proveedor": "Natalia",
+        "stock": 23
+    },
+    {
+        "ID": "PR005",
+        "nombre": "Zapatillas",
+        "proveedor": "Ramiro Alvarez",
+        "stock": 4
+    },
+    {
+        "ID": "PR006",
+        "nombre": "Medias",
+        "proveedor": "Santiago Frias",
+        "stock": 300
+    },
+    {
+        "ID": "PR007",
+        "nombre": "Chaleco",
+        "proveedor": "Ezra Mateo",
+        "stock": 76
+    },
+    {
+        "ID": "PR008",
+        "nombre": "Mallas",
+        "proveedor": "Andressa",
+        "stock": 763
+    }
+]

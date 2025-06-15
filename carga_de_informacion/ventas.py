@@ -21,7 +21,15 @@ def cargar_ventas(archivo_ventas,archivo_productos):
         id_producto = input("ID del producto (formato PR001): ")
         while not re.match(r'^PR[0-9]{3}$', id_producto):
             id_producto = input("ID inválido. Debe tener el formato PR seguido de tres números (ej: PR001): ")
-        cantidad_venta = int(input("Cantidad vendida: "))
+        while True:
+            try:
+                cantidad_venta = int(input("Cantidad de productos: "))
+                if cantidad_venta > 0:
+                    break
+                else:
+                    print("La cantidad debe ser un número entero positivo.")
+            except ValueError:
+                print("Entrada inválida. Por favor, ingrese un número entero positivo.")
 
         #abrir archivo productos
         with open(archivo_productos, "r", encoding="utf-8") as info_productos:
