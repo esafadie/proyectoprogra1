@@ -41,9 +41,9 @@ def cargar_ventas(archivo_ventas,archivo_productos):
         producto_encontrado = False
         for producto in productos:
             if producto['ID'] == id_producto:
+                producto_encontrado = True
                 if producto['stock'] >= cantidad_venta:
                     producto['stock'] -= cantidad_venta
-                    producto_encontrado = True
                 else:
                     print(f"Stock insuficiente para el producto {id_producto}. Solo hay {producto['stock']} unidades.")
         
@@ -53,6 +53,7 @@ def cargar_ventas(archivo_ventas,archivo_productos):
             with open(archivo_productos, "w", encoding="utf-8") as modificar:
                 json.dump(productos, modificar)
             arch.write(id_venta + ";" + id_cliente + ";" + id_producto + ";" + str(cantidad_venta) + "\n")
+            id_cargado.add(id_venta)
                 
                 
     except OSError as mensaje:
@@ -62,4 +63,4 @@ def cargar_ventas(archivo_ventas,archivo_productos):
             arch.close()
         except NameError:
             pass
-    id_cargado.add(id_venta)
+
