@@ -3,10 +3,8 @@ import json
 from carga_de_informacion import *
 import time
 from mostrar_ultimos import *
-
-from productos import *
-
 from dar_de_baja import *
+from productos import *
 
 
 def menu():
