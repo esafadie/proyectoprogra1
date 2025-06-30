@@ -11,7 +11,7 @@ def dar_de_baja_clientes(archivo):
                 nuevas_lineas.append((id_cliente, linea))  
                 linea = arch.readline()
 
-        id_borrar = input("Digite el ID a eliminar (ej: CL002): ").strip()
+        id_borrar = ('CL' + input("Digite el ID a eliminar (Formato 002): ").strip())
         eliminado = False
 
         with open(archivo, "w", encoding="UTF-8") as arch:

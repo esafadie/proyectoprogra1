@@ -1,18 +1,26 @@
 import re
 import json
 
-Id_cargado = set()
+def generar_id_producto(archivo_productos):
+    max_id = 0
+    try:
+        with open(archivo_productos, "r", encoding="utf-8") as f:
+            productos = json.load(f)
+            for producto in productos:
+                if "ID" in producto and re.match(r"PR\d{3}", producto["ID"]):
+                    num = int(producto["ID"][2:])  # Extraer el número
+                    if num > max_id:
+                        max_id = num
+    except FileNotFoundError:
+        pass
+    return f"PR{max_id + 1:03}"
+
 def cargar_productos():
 
-    with open("carga_de_informacion/productos.json", "r", encoding="utf-8") as f:
-        productos = json.load(f)
-    for producto in productos:
-        Id_cargado.add(producto["ID"])
+    archivo = "carga_de_informacion/productos.json"
+    id_producto = generar_id_producto(archivo)
+    print(f"ID generado automáticamente: {id_producto}")
 
-
-    id_producto = input("ID del producto (formato PR001): ")
-    while not re.match(r'^PR[0-9]{3}$', id_producto) or id_producto in Id_cargado: 
-        id_producto = input("ID inválido o repetido. Ingrese otro (ej: PR001): ")
 
     nombre = input("Nombre del producto: ")
     proveedor = input("Proveedor: ")
@@ -26,18 +34,25 @@ def cargar_productos():
         except ValueError:
             print("Entrada inválida. Por favor, ingrese un número entero no negativo.")
             
-    encabezados = ['ID','nombre','proveedor','stock']
-    matriz = [id_producto, nombre, proveedor, stock]
-    Id_cargado.add(id_producto)
-    diccionario = (dict(zip(encabezados,matriz)))
+    nuevo_producto = {
+        "ID": id_producto,
+        "nombre": nombre,
+        "proveedor": proveedor,
+        "stock": stock
+    }
 
     try:
-        with open('carga_de_informacion/productos.json','r') as f:
+        with open(archivo,'r') as f:
             lista = json.load(f)
     except FileNotFoundError:
         lista = []
-    lista.append(diccionario)
+        
+    lista.append(nuevo_producto)
    
-    with open("carga_de_informacion/productos.json","w") as f:
+    with open(archivo,"w") as f:
         json.dump(lista,f)
-    Id_cargado.add(id_producto)
+    
+    print(f"\nProducto {nombre} cargado exitosamente con ID {id_producto}.")
+    print(f"Proveedor: {proveedor}, Stock: {stock}")
+    
+    return nuevo_producto

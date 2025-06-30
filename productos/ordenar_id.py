@@ -2,8 +2,8 @@ import json
 
 def ordenar_productos_por_id(archivo):
     try:
-        arch = open(archivo, "r", encoding="utf-8")
-        productos = json.load(arch)
+        with open(archivo, "r", encoding="utf-8") as arch:
+            productos = json.load(arch)
 
         if not productos:
             print("No hay productos cargados")
@@ -33,8 +33,4 @@ def ordenar_productos_por_id(archivo):
     except Exception as e:
         print("No se puede abrir el archivo:", e)
 
-    finally:
-        try:
-            arch.close()
-        except Exception as e:
-            print(f"No se puede cerrar el archivo correctamente: {e}")
+    

@@ -2,8 +2,8 @@
     {
         "ID": "PR001",
         "nombre": "Remera",
-        "proveedor": "Diego Ramirez",
-        "stock": 439
+        "proveedor": "Diego Moralez",
+        "stock": 256
     },
     {
         "ID": "PR002",
@@ -15,24 +15,18 @@
         "ID": "PR003",
         "nombre": "Gorros",
         "proveedor": "Joaquin Gimenez",
-        "stock": 10
+        "stock": 45
     },
     {
         "ID": "PR004",
         "nombre": "Guantes",
         "proveedor": "Natalia",
-        "stock": 23
+        "stock": 25
     },
     {
         "ID": "PR005",
         "nombre": "Zapatillas",
         "proveedor": "Ramiro Alvarez",
         "stock": 7
-    },
-    {
-        "ID": "PR006",
-        "nombre": "Medias",
-        "proveedor": "Santiago Frias",
-        "stock": 303
     }
 ]

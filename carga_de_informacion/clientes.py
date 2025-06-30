@@ -15,27 +15,45 @@ def generar_nuevo_id_cliente(archivo):
     return f"CL{max_id + 1:03}"
 
 
-
 def cargar_clientes(archivo):
     try:
         id_cliente = generar_nuevo_id_cliente(archivo)
         print(f"ID generado automáticamente para cliente: {id_cliente}")
 
-        nombre = input("Nombre del cliente: ")
-        while not re.match(r"^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$", nombre.strip()):
-            print("Nombre inválido. Solo letras y espacios son permitidos.")
-            nombre = input("Nombre del cliente: ")
-            
-        telefono = input("Teléfono (solo números, entre 6 y 15 dígitos): ")
-        while not re.match(r"^\d{6,15}$", telefono.strip()):
-            print("Teléfono inválido. Ingrese solo números (6-15 dígitos).")
-            telefono = input("Teléfono (solo números, entre 6 y 15 dígitos): ")
+        while True:
+            nombre = input("Nombre del cliente: ").strip()
+            if re.match(r"^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$", nombre):
+                break
+            else:
+                print("Nombre inválido. Solo letras y espacios son permitidos.")
+
+        while True:
+            telefono = input("Teléfono (6 a 15 dígitos, solo números): ").strip()
+            if re.match(r"^\d{6,15}$", telefono):
+                break
+            else:
+                print("Teléfono inválido. Ingrese solo números entre 6 y 15 dígitos.")
+
+        # Verificar si el archivo existe y si está vacío para no agregar salto de línea innecesario
+        agregar_salto = False
+        try:
+            with open(archivo, "r", encoding="utf-8") as f:
+                linea = f.readline()
+                while linea:
+                    if linea.strip() != "":
+                        agregar_salto = True
+                        break
+                    linea = f.readline()
+        except FileNotFoundError:
+            agregar_salto = False
 
         with open(archivo, "a", encoding="utf-8") as arch:
-            arch.write(f"{id_cliente};{nombre};{telefono}\n")
+            if agregar_salto:
+                arch.write("\n")
+            arch.write(f"{id_cliente};{nombre};{telefono}")
 
-        print("Cliente registrado con éxito.")
+        print("\nCliente registrado con éxito:")
+        print(f"ID: {id_cliente}, Nombre: {nombre}, Teléfono: {telefono}")
 
     except OSError:
-        print("Cliente no registrado")
-        print("ERROR: No se puede grabar el archivo")
+        print("Error al guardar el cliente en el archivo.")

@@ -2,10 +2,9 @@ import re
 import json
 def eliminar_por_id(lista, id_buscado, i=0):
     if i >= len(lista):
-        return lista
+        return None
     if lista[i]['ID'] == id_buscado:
-        lista.pop(i)
-        return lista
+        return lista.pop(i)
     return eliminar_por_id(lista, id_buscado, i + 1)
 
 def dar_de_baja_productos(archivo):
@@ -14,23 +13,33 @@ def dar_de_baja_productos(archivo):
             productos = json.load(arch)
 
         if not productos:
-            print("No hay productos cargados")
+            print("No hay productos cargados.")
             return
 
-        id_producto = input("Digite el ID del producto. Debe tener el formato PR seguido de tres números (ej: PR001): ")
+        id_producto = ('PR' + input("Digite el ID del producto (Formato 001): ").strip())
         while not re.match(r'^PR[0-9]{3}$', id_producto):
-            id_producto = input("ID inválido. Debe tener el formato PR seguido de tres números (ej: PR001): ")
+            id_producto = ('PR' + input("ID inválido.Ingrese nuevamente (Formato 001): ").strip())
 
-        productos_actualizados = eliminar_por_id(productos, id_producto)
+        eliminado = eliminar_por_id(productos, id_producto)
 
         with open(archivo, "w", encoding="utf-8") as modificar:
-            json.dump(productos_actualizados, modificar)
+            json.dump(productos, modificar, indent=4)
 
-        print(f"Producto con ID {id_producto} eliminado (si existia).")
-    except:
-        print("No se puede abrir el archivo")
-    finally:
-        try:
-            arch.close()
-        except Exception as e:
-            print(f"No se puede abrir el archivo correctamente: {e}")
+        if eliminado is not None:
+            print(f"\nProducto eliminado:")
+            print(f"{'ID':<10}{'Nombre':<20}{'Proveedor':<20}{'Stock':<10}")
+            print(f"{eliminado['ID']:<10}{eliminado['nombre']:<20}{eliminado['proveedor']:<20}{eliminado['stock']:<10}")
+            if productos:
+                print("-"*60)
+                print("\nProductos restantes:")
+                print(f"{'ID':<10}{'Nombre':<20}{'Proveedor':<20}{'Stock':<10}")
+                for p in productos:
+                    print(f"{p['ID']:<10}{p['nombre']:<20}{p['proveedor']:<20}{p['stock']:<10}")
+        else:
+            print(f"No se encontró ningún producto con el ID {id_producto}.")
+
+
+    except FileNotFoundError:
+        print("El archivo de productos no existe.")
+    except OSError:
+        print(f"Error de archivo.")

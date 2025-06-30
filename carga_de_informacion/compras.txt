@@ -5,3 +5,4 @@ CO004;PR004;Guantes;30;Natalia
 CO005;PR005;Zapatillas;12;Ramiro Alvarez
 CO006;PR002;Pantalones;21;Natalia Ramirez
 CO007;PR006;Medias;3;Santiago Frias
+CO008;PR004;Guantes;2;Natalia
