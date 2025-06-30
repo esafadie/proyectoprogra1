@@ -36,18 +36,12 @@ def menu():
 
             elif opcion == "1": #producto
                 try:
-                    archivo = open("carga_de_informacion/productos.json","r")
-                    productos = json.load(archivo)
+                    with open("carga_de_informacion/productos.json","r") as archivo:
+                        productos = json.load(archivo)
                     if productos == []:
-                        print("")
+                        print("No hay productos cargados")
                     else:
                         print(f"{'ID':<10}{'Nombre':<20}{'Proveedor':<20}{'Stock':<10}")
-                    def mostrar_productos(productos, indice=0): #recursividad
-                        if indice >= len(productos):
-                            return #caso base: Cuando el índice alcanza el largo de la lista, se detiene la recursión
-                        p = productos[indice]
-                        print(f"{p['ID']:<10}{p['nombre']:<20}{p['proveedor']:<20}{p['stock']:<10}")
-                        mostrar_productos(productos, indice + 1) #Caso recursivo: La función se llama a sí misma avanzando al siguiente índice.
                     mostrar_productos(productos)
                 except FileNotFoundError:
                     print("No hay productos cargados")
@@ -96,7 +90,8 @@ def menu():
                     with open("carga_de_informacion/clientes.txt","r",encoding="UTF-8") as file:
                         linea = file.readline()
                         if linea == "":
-                            print("")
+                            print("\nOperación cancelada.")
+                            print("ERROR: No hay clientes cargados")
                         else:
                             print(f"{'ID':<10}{'Nombre':<20}{'Telefono':<20}")
                         while linea:
@@ -126,50 +121,54 @@ def menu():
                 
                 if sub_opcion == 1:
                     cliente = cargar_clientes("carga_de_informacion/clientes.txt")
+                    continue
                 elif sub_opcion == 2:
                     dar_de_baja_clientes("carga_de_informacion/clientes.txt")
+                    continue
                 elif sub_opcion == 3:
                     mostrar_ultimos_clientes("carga_de_informacion/clientes.txt")
+                    continue
                 elif sub_opcion == 4:
                     continue
 
             elif opcion == "3": #compra
-                try:
-                    with open("carga_de_informacion/compras.txt","r",encoding="UTF-8") as file:
-                        linea = file.readline()
-                        if linea == "":
-                            print("")
-                        else:
-                            print(f"{'ID Compra':<10}{'ID Producto':<20}{'Cantidad':<20}{'Proveedor':<20}")
-                        while linea:
-                            idcompra,idprod,cantidad,proveedor = linea.strip().split(";")
-                            print(f"{idcompra:10}{idprod:20}{cantidad:20}{proveedor:20}")
+                    try:
+                        with open("carga_de_informacion/compras.txt","r",encoding="UTF-8") as file:
                             linea = file.readline()
-                except OSError:
-                    print("No se pudo abrir el archivo")
-                print("---------------------------")
-                print("1. Cargar compra")
-                print("2. Mostrar ultimas compras")
-                print("3. Volver al menu principal")
-                print("---------------------------")
-                print()
+                            if linea == "":
+                                print("\nOperación de compra cancelada.")
+                                print("ERROR:No hay compras cargadas")
+                            else:
+                                print(f"{'ID Compra':<20}{'ID Producto':<20}{'Producto':<20}{'Cantidad':<20}{'Proveedor':<20}")
+                            while linea:
+                                idcompra,idprod,prod,cantidad,proveedor = linea.strip().split(";")
+                                print(f"{idcompra:<20}{idprod:<20}{prod:<20}{cantidad:<20}{proveedor:<20}")
+                                linea = file.readline()
+                    except OSError:
+                        print("No se pudo abrir el archivo")
+                    print("---------------------------")
+                    print("1. Cargar compra")
+                    print("2. Mostrar ultimas compras")
+                    print("3. Volver al menu principal")
+                    print("---------------------------")
+                    print()
                 
-                try:
+            try:
                     sub_opcion = int(input("Digite una opcion: "))
                     if not 1 <= sub_opcion <= 3:
                         print("Opción fuera de rango. Se volverá al menú principal.")
                         time.sleep(1)
                         continue
-                except ValueError:
+            except ValueError:
                     print("Debe ingresar un número válido. Se volverá al menú principal.")
                     time.sleep(1)
                     continue
                 
-                if sub_opcion == 1:
+            if sub_opcion == 1:
                     compra = registrar_compra("carga_de_informacion/compras.txt","carga_de_informacion/productos.json")
-                elif sub_opcion == 2:
+            elif sub_opcion == 2:
                     mostrar_ultimas_compras("carga_de_informacion/compras.txt")
-                elif sub_opcion == 3:
+            elif sub_opcion == 3:
                     continue
 
             elif opcion == "4": #venta
@@ -177,7 +176,7 @@ def menu():
                     with open("carga_de_informacion/ventas.txt","r",encoding="UTF-8") as file:
                         linea = file.readline()
                         if linea == "":
-                            print("")
+                            print("No hay ventas cargadas")
                         else:
                             print(f"{'ID Venta':<20}{'ID Cliente':<20}{'ID Producto':<20}{'Cantidad':<20}")
                         while linea:
@@ -216,7 +215,7 @@ def menu():
             print("\n\n")
 
 #Carga usuario
-carga_usuarios()
+#carga_usuarios()
 
 # Ejecutar el menú
 menu()

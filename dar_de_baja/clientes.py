@@ -2,26 +2,30 @@ import re
 
 def dar_de_baja_clientes(archivo):
     try:
-        arch = open(archivo, "r", encoding="UTF-8")
-        lineas = arch.readlines()
-        arch.close()
-
-        id_borrar = input("Digite el ID a eliminar (ej: CL002): ").strip()
         nuevas_lineas = []
 
-        for linea in lineas:
-            id, nombre, telefono = linea.strip().split(";")
-            if id != id_borrar:
-                nuevas_lineas.append(linea)
-            else:
-                print(f"Cliente eliminado: {linea.strip()}")
+        with open(archivo, "r", encoding="UTF-8") as arch:
+            linea = arch.readline()
+            while linea:
+                id_cliente, nombre, telefono = linea.strip().split(";")
+                nuevas_lineas.append((id_cliente, linea))  
+                linea = arch.readline()
 
-    
-        arch = open(archivo, "w", encoding="UTF-8")
-        arch.writelines(nuevas_lineas)
-        arch.close()
+        id_borrar = input("Digite el ID a eliminar (ej: CL002): ").strip()
+        eliminado = False
+
+        with open(archivo, "w", encoding="UTF-8") as arch:
+            for id_cliente, linea in nuevas_lineas:
+                if id_cliente != id_borrar:
+                    arch.write(linea)
+                else:
+                    print(f"Cliente eliminado: {linea.strip()}")
+                    eliminado = True
+
+        if not eliminado:
+            print("No se encontró un cliente con ese ID.")
 
     except FileNotFoundError:
         print("El archivo no existe.")
-    except Exception as e:
-        print("Error al procesar el archivo:", e)
+    except Exception:
+        print("Error al procesar el archivo.")

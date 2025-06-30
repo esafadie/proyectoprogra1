@@ -1,23 +1,30 @@
 import re
 import json
 
-Id_cargado = set()
-
-
-def registrar_compra(arch_compras,arch_productos):
-    with open(arch_compras, "r", encoding="utf-8") as f:
+def generar_nuevo_id(arch_compras):
+    max_Id = 0
+    try:
+        with open(arch_compras, "r", encoding="utf-8") as f:
             for linea in f:
                 partes = linea.strip().split(";")
-                if partes:
-                    Id_cargado.add(partes[0])
+                if partes and re.match(r"CO\d{3}", partes[0]):
+                    num = int(partes[0][2:])  # Obtener el número después de CO
+                    if num > max_id:
+                        max_id = num
+    except FileNotFoundError:
+        pass  # Si el archivo no existe aún, arrancamos desde CO001
+    return f"CO{max_Id + 1:03}"
+
+
+def registrar_compra(arch_compras, arch_productos):
     try:
-        arch = open(arch_compras,"a",encoding="UTF-8")
-        id_compra = input("ID de la compra (formato CO001): ")
-        while not re.match(r'^CO[0-9]{3}$', id_compra) or id_compra in Id_cargado:
-            id_compra = input("ID inválido o repetido. Ingrese otro (ej: CO001): ")
+        id_compra = generar_nuevo_id(arch_compras)
+        print(f"ID generado automáticamente: {id_compra}")
+
         id_producto = input("ID del producto (formato PR001): ")
         while not re.match(r'^PR[0-9]{3}$', id_producto):
             id_producto = input("ID inválido. Debe tener el formato PR seguido de tres números (ej: PR001): ")
+
         while True:
             try:
                 cantidad_compra = int(input("Cantidad de productos: "))
@@ -27,31 +34,42 @@ def registrar_compra(arch_compras,arch_productos):
                     print("La cantidad debe ser un número entero positivo.")
             except ValueError:
                 print("Entrada inválida. Por favor, ingrese un número entero positivo.")
-        proveedor = input("Proveedor: ")
 
-        info_productos = open(arch_productos,"r")
-        productos = json.load(info_productos)
 
+        # Leer productos
+        with open(arch_productos, "r", encoding="utf-8") as archivo_productos:
+            productos = json.load(archivo_productos)
+
+        # Buscar y actualizar producto
         producto_encontrado = False
         for producto in productos:
             if producto['ID'] == id_producto:
                 producto['stock'] += cantidad_compra
+                nombre_producto = producto['nombre']
                 producto_encontrado = True
-        if producto_encontrado == False:
-            print("Producto no encontrado")
+                break
+
+        if not producto_encontrado:
+            print("\nOperación de compra cancelada.")
+            print("ERROR:Producto no encontrado")
+            return
         else:
-            arch.write(id_compra + ";" + id_producto + ";" + str(cantidad_compra) + ";" + proveedor + "\n")
+            print("\nProducto encontrado y stock actualizado.")
+            print(f"Producto seleccionado: {id_producto} - {nombre_producto}")
+            proveedor = producto.get('proveedor', 'Proveedor no especificado')
+            print(f"Proveedor: {proveedor}")
+            print(f"Cantidad comprada: {cantidad_compra}")
+            print(f"Nuevo stock del producto {id_producto}: {producto['stock']}")
 
-        with open(arch_productos, "w", encoding="utf-8") as modificar:
-            json.dump(productos,modificar)
-            info_productos.write(id_compra + ";" + id_producto + ";" + str(cantidad_compra) + ";" + proveedor + "\n")
+        # Guardar compra
+        with open(arch_compras, "a", encoding="utf-8") as arch:
+            arch.write(f"{id_compra};{id_producto};{nombre_producto};{cantidad_compra};{proveedor}\n")
 
-    except OSError as mensaje:
-        print("")
-    finally:
-        try:
-            arch.close()
-        except NameError:
-            pass
+        # Guardar productos actualizados
+        with open(arch_productos, "w", encoding="utf-8") as archivo_productos:
+            json.dump(productos, archivo_productos, indent=4)
 
-    Id_cargado.add(id_compra)
+        print("Compra registrada con éxito.")
+
+    except OSError as e:
+        print("Error de acceso a archivo:", e)

@@ -33,5 +33,4 @@ def dar_de_baja_productos(archivo):
         try:
             arch.close()
         except Exception as e:
-            print(f"No se puede abrie el archivo correctamente: {e}")
-    
+            print(f"No se puede abrir el archivo correctamente: {e}")
