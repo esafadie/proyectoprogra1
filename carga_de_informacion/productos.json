@@ -21,7 +21,7 @@
         "ID": "PR004",
         "nombre": "Guantes",
         "proveedor": "Natalia",
-        "stock": 2
+        "stock": 56
     },
     {
         "ID": "PR006",
@@ -34,5 +34,11 @@
         "nombre": "Medias altas",
         "proveedor": "Martin mendez",
         "stock": 230
+    },
+    {
+        "ID": "PR008",
+        "nombre": "Campera uniclo",
+        "proveedor": "Juan Fassi",
+        "stock": 62
     }
 ]

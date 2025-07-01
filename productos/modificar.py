@@ -7,7 +7,7 @@ def submenu_modificacion_producto(prod):
     print("2. Proveedor")
     print("3. Stock")
     print("4. Todos los campos")
-    print("5. Cancelar")
+    print("5. Volver al menú principal")
     try:
         try:
             opcion = int(input("Seleccione una opción: "))

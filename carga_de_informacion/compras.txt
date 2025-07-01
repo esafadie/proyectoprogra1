@@ -9,3 +9,4 @@ CO008;PR004;Guantes;2;Natalia
 CO009;PR003;Gorros;43;Joaquin Gimenez
 CO010;PR002;Pantalones;5;Natalia Ramirez
 CO011;PR006;Bufanda;1;Leo Messi
+CO012;PR004;Guantes;54;Natalia

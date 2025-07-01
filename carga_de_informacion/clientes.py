@@ -52,7 +52,8 @@ def cargar_clientes(archivo):
             arch.write(f"{id_cliente};{nombre};{telefono}\n")
 
         print("\nCliente registrado con éxito:")
-        print(f"ID: {id_cliente}, Nombre: {nombre}, Teléfono: {telefono}")
+        print(f"{'ID Cliente':<10}{'Nombre':<20}{'Teléfono':<10}")
+        print(f"{id_cliente:<10}{nombre:<20}{telefono:<10}")
 
     except OSError:
         print("Error al guardar el cliente en el archivo.")

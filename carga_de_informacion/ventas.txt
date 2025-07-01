@@ -9,3 +9,4 @@ VE008;CL002;Francisco;PR001;Remera;1
 VE009;CL004;Bruno;PR003;Gorros;4
 VE010;CL009;Mati Raw;PR004;Guantes;23
 VE011;CL002;Francisco;PR001;Remera;12
+VE012;CL006;Romina Ayala;PR008;Campera uniclo;43
