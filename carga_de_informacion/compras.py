@@ -7,7 +7,7 @@ def generar_id_compra(arch_compras):
         with open(arch_compras, "r", encoding="utf-8") as f:
             for linea in f:
                 partes = linea.strip().split(";")
-                if partes and re.match(r"CO\d{3}", partes[0]):
+                if partes and re.match(r"CO\d{3}$", partes[0]):
                     num = int(partes[0][2:])  # Obtener el número después de CO
                     if num > max_Id:
                         max_Id = num
@@ -73,9 +73,12 @@ def registrar_compra(arch_compras, arch_productos):
 
     try:
         with open(arch_compras, "a", encoding="utf-8") as arch:
-            arch.write('\n' + f"{id_compra};{id_producto};{nombre_producto};{cantidad_compra};{proveedor}\n")
+            arch.write(f"{id_compra};{id_producto};{nombre_producto};{cantidad_compra};{proveedor}\n")
         with open(arch_productos, "w", encoding="utf-8") as archivo_productos:
             json.dump(productos, archivo_productos, indent=4)
         print("\n\nCompra registrada con éxito.")
+        print(f"{'ID Compra':<20}{'ID Producto':<20}{'Producto':<20}{'Cantidad':<20}{'Proveedor':<20}")
+        print(f"{id_compra:<20}{id_producto:<20}{nombre_producto:<20}{cantidad_compra:<20}{proveedor:<20}")
+        
     except OSError:
         print("Error al guardar los archivos.")

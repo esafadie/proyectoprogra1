@@ -34,23 +34,22 @@ def cargar_clientes(archivo):
             else:
                 print("Teléfono inválido. Ingrese solo números entre 6 y 15 dígitos.")
 
-        # Verificar si el archivo existe y si está vacío para no agregar salto de línea innecesario
-        agregar_salto = False
+        # Escribir el nuevo cliente siempre en una nueva línea
+        lineas = []
         try:
             with open(archivo, "r", encoding="utf-8") as f:
-                linea = f.readline()
-                while linea:
-                    if linea.strip() != "":
-                        agregar_salto = True
-                        break
-                    linea = f.readline()
+                lineas = f.readlines()
         except FileNotFoundError:
-            agregar_salto = False
+            pass
+        
+        agregar_salto = False
+        if lineas and not lineas[-1].endswith('\n'):
+            agregar_salto = True
 
         with open(archivo, "a", encoding="utf-8") as arch:
             if agregar_salto:
-                arch.write("\n")
-            arch.write(f"{id_cliente};{nombre};{telefono}")
+                arch.write('\n')
+            arch.write(f"{id_cliente};{nombre};{telefono}\n")
 
         print("\nCliente registrado con éxito:")
         print(f"ID: {id_cliente}, Nombre: {nombre}, Teléfono: {telefono}")

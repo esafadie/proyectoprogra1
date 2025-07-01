@@ -107,8 +107,9 @@ def cargar_ventas(arch_ventas, archivo_productos, arch_clientes):
         with open(archivo_productos, "w", encoding="utf-8") as modificar:
             json.dump(productos, modificar, indent=4)
         with open(arch_ventas, "a", encoding="utf-8") as arch:
-            arch.write(f"\n{id_venta};{id_cliente};{nombre_cliente};{id_producto};{nombre_producto};{cantidad_venta}\n")
+            arch.write(f"{id_venta};{id_cliente};{nombre_cliente};{id_producto};{nombre_producto};{cantidad_venta}\n")
             print("\n\nVenta registrada correctamente.")
-            print('\n' + f"Cliente: {nombre_cliente} - Producto: {nombre_producto} - Cantidad: {cantidad_venta}")
+            print(f"{'ID Venta':<20}{'ID Cliente':<20}{'Cliente':<20}{'ID Producto':<20}{'Producto':<20}{'Cantidad':<20}")
+            print(f"{id_venta:<20}{id_cliente:<20}{nombre_cliente:<20}{id_producto:<20}{nombre_producto:<20}{cantidad_venta:<20}")
     except OSError:
         print("Error al guardar los archivos.")

@@ -2,31 +2,37 @@
     {
         "ID": "PR001",
         "nombre": "Remera",
-        "proveedor": "Diego Moralez",
-        "stock": 256
+        "proveedor": "Diego Toro",
+        "stock": 219
     },
     {
         "ID": "PR002",
         "nombre": "Pantalones",
         "proveedor": "Natalia Ramirez",
-        "stock": 140
+        "stock": 145
     },
     {
         "ID": "PR003",
         "nombre": "Gorros",
         "proveedor": "Joaquin Gimenez",
-        "stock": 45
+        "stock": 88
     },
     {
         "ID": "PR004",
         "nombre": "Guantes",
         "proveedor": "Natalia",
-        "stock": 25
+        "stock": 2
     },
     {
-        "ID": "PR005",
-        "nombre": "Zapatillas",
-        "proveedor": "Ramiro Alvarez",
-        "stock": 7
+        "ID": "PR006",
+        "nombre": "Bufanda",
+        "proveedor": "Leo Messi",
+        "stock": 204
+    },
+    {
+        "ID": "PR007",
+        "nombre": "Medias altas",
+        "proveedor": "Martin mendez",
+        "stock": 230
     }
 ]

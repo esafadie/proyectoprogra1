@@ -74,12 +74,17 @@ def modificar_producto(archivo):
         for prod in productos:
             if prod['ID'] == id_producto:
                 producto_encontrado = True
+                producto_original = prod.copy()  # Guardar el producto original
                 print(f"\nProducto encontrado: {prod['ID']}")
                 print(f"{'ID':<10}{'Nombre':<20}{'Proveedor':<20}{'Stock':<10}")
                 print(f"{prod['ID']:<10}{prod['nombre']:<20}{prod['proveedor']:<20}{prod['stock']:<10}")
                 print("-" * 60)
-                if submenu_modificacion_producto(prod):  
-                    print("\n\nProducto modificado exitosamente")
+                if submenu_modificacion_producto(prod):
+                    print("\nProducto original:")
+                    print(f"{'ID':<10}{'Nombre':<20}{'Proveedor':<20}{'Stock':<10}")
+                    print(f"{producto_original['ID']:<10}{producto_original['nombre']:<20}{producto_original['proveedor']:<20}{producto_original['stock']:<10}")
+                    print("-" * 60)
+                    print("\nProducto modificado exitosamente")
                     print(f"\nProducto actualizado:")
                     print(f"{'ID':<10}{'Nombre':<20}{'Proveedor':<20}{'Stock':<10}")
                     print(f"{prod['ID']:<10}{prod['nombre']:<20}{prod['proveedor']:<20}{prod['stock']:<10}")
